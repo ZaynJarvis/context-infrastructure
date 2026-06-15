@@ -1,12 +1,12 @@
 # Setup Guide: Context Infrastructure
 
-这是 AI 引导的配置指南。按步骤操作，每步完成后立刻能感受到差异。
+这是一个本地 context scaffold 的配置指南。目标不是让 AI “立刻变成你”，而是让 agent 在每次工作前能读取稳定的身份、范围、规则和工具索引。
 
 ---
 
-## Step 1：填写身份文件（必填，5 分钟）
+## Step 1：填写身份文件（必填）
 
-**价值**：完成这一步，AI 的行为立刻个性化。这是 ROI 最高的一步。
+**目标**：让 agent 在 session 开始时知道正在帮谁、当前时区、沟通偏好、哪些表达方式应该避免。
 
 ### 1a. 填写 USER.md
 
@@ -19,13 +19,13 @@
 - **技术兴趣**：越具体越好
 - **会让你烦的**：帮 AI 避开你讨厌的沟通方式
 
-**验证**：填好后，在 AI 对话里问「介绍一下你对我的了解」，看 AI 是否能准确描述你。
+**验证**：填好后，在 AI 对话里问「介绍一下你对我的了解」。合格结果应该引用 `rules/USER.md` 里的具体信息，而不是泛泛描述用户。
 
 ### 1b. 自定义 SOUL.md（可选但推荐）
 
 打开 `rules/SOUL.md`，调整 AI 的核心行为基调。
 
-默认内容已经是通用的良好基础（直接、有观点、不说废话）。如果你有特殊需求，在「氛围」和「核心真理」部分添加你的偏好。
+默认内容是一个行为模板。如果你不想使用 persona-heavy 的写法，可以把它压缩成更小的运行规则：行动边界、沟通风格、什么时候必须询问、什么时候可以自主推进。
 
 ---
 
@@ -81,9 +81,9 @@
 
 ---
 
-## Step 3：配置记忆系统（可选，30 分钟）
+## Step 3：配置记忆系统（可选）
 
-**价值**：让 AI 自动积累你的工作经验，越用越懂你。
+**目标**：让定时任务把可复用观察写进 `contexts/memory/OBSERVATIONS.md`，再由人工或 reflector 把稳定规则晋升到 `rules/` 或 `rules/skills/`。
 
 ### 3a. 理解三层架构
 
@@ -98,18 +98,19 @@ L3 你已经配置好了（Step 1）。L1/L2 需要设置 cron 自动运行。
 
 `periodic_jobs/ai_heartbeat/` 的脚本依赖 OpenCode Server API。
 
-1. 确认本地 OpenCode Server 运行（或配置连接）
-2. 在 `periodic_jobs/ai_heartbeat/src/v0/` 检查 `opencode_client.py`（需要你自行补充，源码参考 OpenCode 文档）
-3. 测试连通性：`python3 observer.py --help`
+1. 确认本地 OpenCode Server 运行（或配置连接）。
+2. 复制 `.env.example` 为 `.env`，填写 `OPENCODE_BASE_URL`、`OPENCODE_USERNAME`、`OPENCODE_PASSWORD`。
+3. 测试基础 CLI 表面：`./scripts/smoke.sh`。
+4. 再单独试运行 observer：`python3 periodic_jobs/ai_heartbeat/src/v0/observer.py --help`。
 
 ### 3c. 配置 Cron
 
 ```bash
 # 每日 8:00 AM 运行 observer（扫描当日变化）
-0 8 * * * cd /path/to/your/workspace && python3 periodic_jobs/ai_heartbeat/src/v0/observer.py >> /tmp/observer.log 2>&1
+0 8 * * * cd /path/to/your/workspace && .venv/bin/python periodic_jobs/ai_heartbeat/src/v0/observer.py >> /tmp/observer.log 2>&1
 
 # 每周一 9:00 AM 运行 reflector（蒸馏和晋升）
-0 9 * * 1 cd /path/to/your/workspace && python3 periodic_jobs/ai_heartbeat/src/v0/reflector.py >> /tmp/reflector.log 2>&1
+0 9 * * 1 cd /path/to/your/workspace && .venv/bin/python periodic_jobs/ai_heartbeat/src/v0/reflector.py >> /tmp/reflector.log 2>&1
 ```
 
 调整路径和时间为你的实际情况。
@@ -153,15 +154,15 @@ python3 periodic_jobs/ai_heartbeat/src/v0/observer.py 2024-01-15
 
 ---
 
-## 何时你会感受到系统的价值
+## 何时说明系统真的有用
 
-**填好 USER.md 后（立刻）**：AI 的回答更有针对性，不再是泛化的通用答复。
+**填好 USER.md 后**：agent 能准确引用你的时区、角色、偏好和 avoid-list。
 
-**使用 2-3 周后**：`contexts/` 目录里开始积累你的工作记录，AI 可以引用上下文。
+**使用 2-3 周后**：`contexts/memory/OBSERVATIONS.md` 里应该有带日期、来源和后续价值判断的观察，而不是流水账。
 
-**运行 1-2 个月记忆系统后**：observer 开始识别你的工作模式，reflector 把高价值经验晋升为 skill 或 axiom。
+**运行 1-2 个月记忆系统后**：应该能看到若干观察被人工或 reflector 晋升为稳定规则、skill 或 workflow。
 
-**积累 6+ 个月后**：系统开始真正了解你的判断逻辑和决策模式，你会发现 AI 给出的建议越来越接近你自己会做的决定。
+**如果 agent 不能引用具体记录或晋升理由**：说明记忆系统没有工作，哪怕文档看起来很完整。
 
 ---
 
@@ -183,4 +184,4 @@ A：可以。`observer.py` 的核心逻辑是构造 prompt 并调用 AI；你可
 
 ## 下一步
 
-系统搭好后，真正的积累才刚开始。关键是持续使用：把你的工作放在这个 workspace 里，让 AI 参与每天的工作。随着时间推移，系统会越来越懂你。
+系统搭好后，真正的工作是持续记录、删掉低价值观察、把重复出现的判断晋升为可复用规则。不要把 sample content 当成自己的长期记忆。

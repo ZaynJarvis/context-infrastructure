@@ -5,10 +5,13 @@ Instructs OpenCode-Builder to perform memory garbage collection directly on the 
 """
 import os
 import sys
+from pathlib import Path
 from opencode_client import OpenCodeClient
 from datetime import datetime
 
-KNOWLEDGE_BASE = "/path/to/your/workspace/periodic_jobs/ai_heartbeat/docs/KNOWLEDGE_BASE.md"
+ROOT_DIR = Path(__file__).resolve().parents[4]
+KNOWLEDGE_BASE = ROOT_DIR / "periodic_jobs" / "ai_heartbeat" / "docs" / "KNOWLEDGE_BASE.md"
+OBSERVATIONS_PATH = ROOT_DIR / "contexts" / "memory" / "OBSERVATIONS.md"
 
 PROMPT_TEMPLATE = """
 执行记忆系统的"反思与晋升"任务。
@@ -16,7 +19,7 @@ PROMPT_TEMPLATE = """
 SOP: {kb_path}
 
 步骤：
-1. 读取 /contexts/memory/OBSERVATIONS.md，分析 🔴 和高优 🟡 条目
+1. 读取 {observations_path}，分析 🔴 和高优 🟡 条目
 2. 将具有普适性的内容晋升到 rules/，按职责边界分类：
    - SOUL.md: Agent 身份与核心价值观
    - USER.md: 用户画像与人生哲学
@@ -32,8 +35,7 @@ SOP: {kb_path}
 def main():
     import argparse
     parser = argparse.ArgumentParser(description='L2 Reflector Agent')
-    parser.add_argument('--model', default='<your-model-id>',
-                        choices=['<your-model-id>'],
+    parser.add_argument('--model', default=os.getenv("OPENCODE_MODEL", "antigravity-gemini-3-flash"),
                         help='Model ID to use')
     args = parser.parse_args()
     
@@ -47,7 +49,7 @@ def main():
     if not session_id:
         return
         
-    prompt = PROMPT_TEMPLATE.format(kb_path=KNOWLEDGE_BASE)
+    prompt = PROMPT_TEMPLATE.format(kb_path=KNOWLEDGE_BASE, observations_path=OBSERVATIONS_PATH)
     client.send_message(session_id, prompt, model_id=model_id)
     # If send_message timed out, agent may still be running; poll until done
     print("Waiting for session to complete (sync mode)...")

@@ -7,7 +7,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 module_dir = Path(__file__).resolve().parent
-project_env_path = module_dir.parent.parent / ".env"
+project_env_path = module_dir.parents[3] / ".env"
 legacy_env_path = module_dir.parent / ".env"
 if project_env_path.exists():
     load_dotenv(project_env_path)

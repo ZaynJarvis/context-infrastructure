@@ -1,5 +1,6 @@
-google-genai>=1.73.1
+google-genai>=1.47.0,<2.0.0
 openai>=1.0.0
 pytest>=8.0.0
 python-dotenv>=1.0.0
 requests>=2.31.0
+urllib3<2.0.0

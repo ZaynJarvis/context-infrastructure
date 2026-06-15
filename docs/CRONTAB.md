@@ -6,16 +6,14 @@
 
 ## 时间线总览
 
-```
-3:05 AM   → Situation Awareness: 每日摘要 + 摄像头缓存刷新
-4:00 AM   → Session Sync: 导出 AI session 归档
-6:30 AM   → WeChat DB Parser: 导出每日消息为 CSV（如适用）
-7:00 AM   → Daily Briefing: 生成个人晨报 → Email
+This repo ships the AI heartbeat jobs. Other personal automation jobs from the
+upstream author are not part of this starter contract.
+
+```text
 8:00 AM   → AI Heartbeat Observer: 扫描文件变动，提取观察写入 OBSERVATIONS.md
-Every 2m  → Situation Awareness: 快照采集（交通/摄像头/警报）
-Every 12h → Situation Awareness: 风力预警检查
 Weekly    → AI Heartbeat Reflector: 合并/提升/清理记忆
 Daily     → Crontab Monitor: 健康审计，发现异常则发告警邮件
+Optional  → AI News Survey: 生成 AI 行业日报或周报
 ```
 
 ---
@@ -27,7 +25,7 @@ Daily     → Crontab Monitor: 健康审计，发现异常则发告警邮件
 扫描 workspace 文件变动，提取有价值的观察写入 `contexts/memory/OBSERVATIONS.md`。这是三层记忆系统的"输入端"。
 
 - **脚本**：`periodic_jobs/ai_heartbeat/src/v0/observer.py`
-- **依赖**：OpenCode Server API（`OPENCODE_API_URL`）
+- **依赖**：OpenCode Server API（`OPENCODE_BASE_URL` / `OPENCODE_USERNAME` / `OPENCODE_PASSWORD`）
 - **建议时间**：每日 8:00 AM（在 daily briefing 之后）
 
 ### AI Heartbeat Reflector（每周）
@@ -35,7 +33,7 @@ Daily     → Crontab Monitor: 健康审计，发现异常则发告警邮件
 合并、提升、清理 OBSERVATIONS.md 中积累的观察，蒸馏为更高层次的认知。
 
 - **脚本**：`periodic_jobs/ai_heartbeat/src/v0/reflector.py`
-- **依赖**：OpenCode Server API（`OPENCODE_API_URL`）
+- **依赖**：OpenCode Server API（`OPENCODE_BASE_URL` / `OPENCODE_USERNAME` / `OPENCODE_PASSWORD`）
 - **建议时间**：每周日 9:00 AM
 
 ### Crontab Monitor（每日）
@@ -86,7 +84,7 @@ Daily     → Crontab Monitor: 健康审计，发现异常则发告警邮件
 ## 注意事项
 
 1. **路径替换**：所有 `/path/to/your/workspace` 必须替换为你的实际绝对路径。
-2. **虚拟环境**：脚本依赖 `.venv` 中的 Python 包，确保先运行 `uv pip install -r requirements.txt`（如有）。
+2. **虚拟环境**：脚本依赖 `.venv` 中的 Python 包，确保先运行 `pip install -r requirements.txt`。
 3. **环境变量**：cron 环境不会自动加载 `.env`，建议在脚本中显式加载，或在 crontab 中用 `env $(cat .env | xargs)` 注入。
 4. **时区**：macOS cron 默认使用系统时区；Linux 服务器建议在 crontab 顶部显式设置 `TZ=`。
 5. **日志**：示例中日志写入 `/tmp/`，生产环境建议改为持久化路径（如 `logs/` 目录）。

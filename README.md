@@ -1,83 +1,178 @@
-# Context Infrastructure — Reference Implementation
+# Context Infrastructure
 
-> 背景阅读：[为什么AI只会说正确的废话，以及怎么把它逼出舒适区](https://yage.ai/context-infrastructure.html)
+This repo is a file-based workspace scaffold for coding agents.
 
-这是一个运行了一年的 context infrastructure 系统的完整结构。主要价值是作为 reference implementation，让你看到系统长什么样、数据如何流动、记忆如何积累。
+It gives an agent predictable places to read durable rules, retrieve working
+memory, use reusable skills, and run scheduled observation jobs. The useful
+part is the contract. The sample content is not reusable as-is.
 
-**核心定位**：这不是开箱即用的工具，而是一个可以参考的蓝图。Clone 下来后，你可以立刻体验「有 context vs 没有 context」的差异。但要让 AI 真正变成你自己的，需要从头采集你的行为数据——没有捷径。
+## What It Solves
 
----
+Agents often lose the state that makes work safe to continue: who they are
+helping, which files matter, what constraints are active, what evidence was
+already checked, and which repeated workflows should become skills.
 
-## Quick Start（5 分钟）
+This repo makes that state inspectable on disk:
+
+- `rules/` stores durable operating context.
+- `contexts/memory/` stores observations that may be promoted later.
+- `rules/skills/` stores reusable workflows and tool guides.
+- `periodic_jobs/ai_heartbeat/` contains scripts for scheduled observation and
+  reflection.
+- `tools/` contains optional utilities that can be wired into a local workflow.
+
+## What This Is Not
+
+- Not a hosted memory service.
+- Not a vector database replacement.
+- Not a secret store.
+- Not turnkey personalization.
+- Not proof that the included personal rules should become yours.
+
+Clone it to inspect the contract, then replace the sample identity, rules,
+memory, and adapters with your own.
+
+## Quick Smoke Test
 
 ```bash
-git clone https://github.com/grapeot/context-infrastructure
+git clone https://github.com/ZaynJarvis/context-infrastructure
 cd context-infrastructure
-# 用 Claude Code / OpenCode / Cursor 打开这个目录
+python3 -m venv .venv
+. .venv/bin/activate
+pip install -r requirements.txt
+./scripts/smoke.sh
 ```
 
-然后：打开 [`rules/USER.md`](rules/USER.md)，填写你的基本信息。这是 ROI 最高的一步，完成后 AI 的行为立刻个性化。
+Expected receipt:
 
-详细步骤见 [`setup_guide.md`](setup_guide.md)。
-
-如果你想把它扩展成更完整的工作系统，可以看 [`docs/SKILL_ECOSYSTEM.md`](docs/SKILL_ECOSYSTEM.md)。那里列了一组可单独安装的 public skill repo，例如 Web 搜索、Google Docs、Google Maps、邮件、OpenCode、PPTX、社交媒体、支付分析和本地 process launcher。`context-infrastructure` 保持轻量；完整能力通过独立 repo 按需安装。
-
----
-
-## 目录结构
-
+```text
+ok: pdf_to_markdown_cli help
+ok: pdf_to_markdown_cli doctor
+ok: typefully_post help
+ok: kit_metrics help
+ok: send_email_to_myself help
+ok: observer help
+ok: reflector help
+ok: pytest
 ```
+
+Some tools need credentials before they can do real work. The smoke test only
+checks the local contract and CLI surfaces.
+
+## Agent Contract
+
+An agent using this workspace should:
+
+1. Read `AGENTS.md` first.
+2. Load the smallest relevant rule files, not the whole tree by default.
+3. Treat `rules/USER.md` and `rules/SOUL.md` as local templates until replaced.
+4. Write short-lived observations to `contexts/memory/OBSERVATIONS.md`.
+5. Promote repeated, verified observations into rules or skills only after
+   review.
+6. Keep secrets in `.env` or an external secret manager, never in committed
+   rules or memory.
+
+The important boundary: public repo content is a scaffold. Private identity,
+private observations, credentials, local paths, and personal decisions belong in
+your local overlay.
+
+## Layout
+
+```text
 context-infrastructure/
-├── AGENTS.md                    # 根路由表（AI 每次 session 的起点）
-├── setup_guide.md               # 配置指引
-├── .env.example                 # 环境变量模板
+├── AGENTS.md                    # Workspace entry contract for agents
+├── setup_guide.md               # Setup and adaptation guide
+├── .env.example                 # Environment variable names used by tools
+├── requirements.txt             # Python dependencies for smoke/local tools
 │
 ├── docs/
-│   ├── CRONTAB.md               # 定时任务配置指南（时间线 + 示例 crontab）
-│   └── SKILL_ECOSYSTEM.md       # 可单独安装的 public skill repo 目录
+│   ├── CRONTAB.md               # Scheduled job setup
+│   └── SKILL_ECOSYSTEM.md       # Optional external skill repos
 │
 ├── rules/
-│   ├── SOUL.md                  # AI 的身份和行为基调（模板）
-│   ├── USER.md                  # 你的偏好和背景（模板）
-│   ├── COMMUNICATION.md         # 沟通风格指南（可直接用）
-│   ├── WORKSPACE.md             # 目录路由索引
-│   ├── axioms/                  # 43 条决策公理（展示层）
-│   └── skills/                  # 25+ 个可复用 skill（展示层）
+│   ├── SOUL.md                  # Agent behavior template
+│   ├── USER.md                  # User profile template
+│   ├── COMMUNICATION.md         # Communication rules
+│   ├── WORKSPACE.md             # File routing index
+│   ├── axioms/                  # Imported sample decision notes
+│   └── skills/                  # Reusable workflow/tool guides
 │
 ├── contexts/
-│   ├── memory/
-│   │   └── OBSERVATIONS.md      # 三层记忆系统的 L1/L2 层
-│   ├── survey_sessions/         # 调研报告存放目录
-│   ├── daily_records/           # 日常记录存放目录
-│   └── thought_review/          # 思考复盘存放目录
+│   └── memory/
+│       └── OBSERVATIONS.md      # Observation log for later promotion
 │
 ├── periodic_jobs/
 │   └── ai_heartbeat/
 │       ├── docs/
-│       │   ├── PRD.md           # 记忆系统设计文档
-│       │   └── KNOWLEDGE_BASE.md # 观察和反思的 SOP
 │       └── src/v0/
-│           ├── observer.py      # 每日观察脚本（需配置 cron）
-│           └── reflector.py     # 每周反思脚本（需配置 cron）
+│           ├── observer.py      # L1 observation trigger
+│           └── reflector.py     # L2 reflection/promotion trigger
 │
-├── tools/
-│   ├── semantic_search/         # 语义搜索（Tier 2）
-│   └── share_report/            # 报告发布（Tier 2）
+├── scripts/
+│   └── smoke.sh                 # Verifies local runnable surfaces
 │
-└── adhoc_jobs/                  # 按需任务存放目录
+└── tools/                       # Optional utility scripts
 ```
 
----
+## Current Runnable Surface
 
-## 三层结构
+These commands are expected to run after `pip install -r requirements.txt`:
 
-**展示层（可以参考，不能复制）**：[`rules/axioms/`](rules/axioms/) 和 [`rules/skills/`](rules/skills/) 包含了这个系统积累一年的内容。43 条公理是从具体经历中蒸馏出来的，skills 是从真实项目中总结的。这些代表原作者的视角，对你有参考价值，但不能替代你自己积累的认知。
+```bash
+python3 rules/skills/pdf_to_markdown_cli.py --help
+python3 rules/skills/pdf_to_markdown_cli.py doctor
+python3 tools/typefully_post.py --help
+python3 tools/kit_metrics.py --help
+python3 tools/send_email_to_myself.py --help
+python3 -m pytest rules/skills/tests -q
+```
 
-**可复用层（直接用）**：[`rules/SOUL.md`](rules/SOUL.md)、[`rules/USER.md`](rules/USER.md) 是模板，填写即可使用。[`rules/COMMUNICATION.md`](rules/COMMUNICATION.md) 是通用的沟通风格指南，大多数人可以直接采用。[`periodic_jobs/ai_heartbeat/`](periodic_jobs/ai_heartbeat/) 提供了记忆系统的实现代码。需要配置定时任务时，参考 [`docs/CRONTAB.md`](docs/CRONTAB.md)。
+These commands require additional configuration:
 
-**不可复用层**：公理的具体内容、skill 背后的具体经验。理解它们的结构和形成方式，然后从你自己的数据中积累。
+- `periodic_jobs/ai_heartbeat/src/v0/observer.py`
+- `periodic_jobs/ai_heartbeat/src/v0/reflector.py`
+- `tools/semantic_search/main.py`
+- `tools/ga4_metrics.py`
+- scripts that call Typefully, Kit, Gmail, or OpenCode APIs
 
----
+## OpenCode Configuration
+
+The heartbeat jobs use:
+
+```env
+OPENCODE_BASE_URL=http://localhost:4096
+OPENCODE_USERNAME=opencode
+OPENCODE_PASSWORD=
+OPENCODE_MESSAGE_TIMEOUT=3600
+OPENCODE_MODEL=antigravity-gemini-3-flash
+```
+
+The observer and reflector scripts resolve paths relative to the repo root. You
+should not need to hardcode `/path/to/your/workspace` in the Python files.
+
+## Use This If
+
+- You want an inspectable local context scaffold for coding agents.
+- You are comfortable replacing sample content with your own rules and memory.
+- You want skills and observations stored as plain files.
+- You want scheduled jobs to propose memory updates, not silently mutate a
+  hosted profile.
+
+## Do Not Use This If
+
+- You want a packaged app.
+- You want automatic personalization without curating your own data.
+- You need multi-user permissions, hosted sync, or audited secret management.
+- You need a production memory database today.
+
+## First Adaptation Checklist
+
+1. Replace `rules/USER.md`.
+2. Replace or reduce `rules/SOUL.md`.
+3. Decide which imported `rules/skills/` are actually active.
+4. Treat `rules/axioms/` as sample decision notes, not universal rules.
+5. Copy `.env.example` to `.env` and fill only the tools you use.
+6. Run `./scripts/smoke.sh`.
 
 ## License
 
