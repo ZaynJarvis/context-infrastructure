@@ -1,0 +1,862 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Zayn Axiom Review</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f6f7f9;
+        --panel: #ffffff;
+        --ink: #171717;
+        --muted: #5d6470;
+        --line: #d9dee7;
+        --teal: #0f8b8d;
+        --blue: #2563eb;
+        --rose: #e11d48;
+        --amber: #b7791f;
+        --green: #15803d;
+        --violet: #7c3aed;
+        --shadow: 0 12px 30px rgba(23, 23, 23, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        letter-spacing: 0;
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      .app {
+        min-height: 100vh;
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        border-bottom: 1px solid var(--line);
+        background: rgba(246, 247, 249, 0.94);
+        backdrop-filter: blur(14px);
+      }
+
+      .topbar {
+        display: grid;
+        gap: 12px;
+        padding: 14px 16px 12px;
+      }
+
+      .title-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 20px;
+        line-height: 1.15;
+        font-weight: 760;
+      }
+
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        min-height: 32px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: var(--panel);
+        padding: 6px 10px;
+        color: var(--muted);
+        font-size: 12px;
+        white-space: nowrap;
+      }
+
+      .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 99px;
+        background: var(--amber);
+      }
+
+      .toolbar {
+        display: grid;
+        gap: 10px;
+      }
+
+      .search {
+        width: 100%;
+        min-height: 44px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+        color: var(--ink);
+        padding: 0 13px;
+        outline: none;
+      }
+
+      .search:focus {
+        border-color: var(--blue);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+      }
+
+      .tabs {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        overflow: hidden;
+        background: var(--panel);
+      }
+
+      .tab {
+        min-height: 40px;
+        border: 0;
+        border-right: 1px solid var(--line);
+        background: transparent;
+        color: var(--muted);
+        cursor: pointer;
+        padding: 7px 4px;
+        font-size: 13px;
+      }
+
+      .tab:last-child {
+        border-right: 0;
+      }
+
+      .tab.active {
+        background: var(--ink);
+        color: #ffffff;
+      }
+
+      main {
+        display: grid;
+        gap: 18px;
+        width: min(1180px, 100%);
+        margin: 0 auto;
+        padding: 16px;
+      }
+
+      section {
+        display: grid;
+        gap: 12px;
+      }
+
+      h2 {
+        margin: 0;
+        font-size: 16px;
+        line-height: 1.2;
+      }
+
+      .section-head {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .section-note {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .metric {
+        min-height: 96px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+        padding: 13px;
+        box-shadow: var(--shadow);
+      }
+
+      .metric strong {
+        display: block;
+        font-size: 28px;
+        line-height: 1;
+      }
+
+      .metric span {
+        display: block;
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.35;
+      }
+
+      .map-panel {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+        padding: 14px;
+        box-shadow: var(--shadow);
+      }
+
+      .migration-map {
+        display: grid;
+        gap: 11px;
+      }
+
+      .bar-row {
+        display: grid;
+        grid-template-columns: 76px 1fr 44px;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+      }
+
+      .bar-track {
+        height: 12px;
+        overflow: hidden;
+        border-radius: 99px;
+        background: #eef1f5;
+      }
+
+      .bar-fill {
+        height: 100%;
+        border-radius: inherit;
+      }
+
+      .bar-ai {
+        background: var(--blue);
+      }
+
+      .bar-tech {
+        background: var(--teal);
+      }
+
+      .bar-mgmt {
+        background: var(--green);
+      }
+
+      .bar-trust {
+        background: var(--rose);
+      }
+
+      .bar-cross {
+        background: var(--violet);
+      }
+
+      .grid {
+        display: grid;
+        gap: 10px;
+      }
+
+      .card {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+        padding: 13px;
+        box-shadow: var(--shadow);
+      }
+
+      .card-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .id {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 44px;
+        height: 28px;
+        border-radius: 999px;
+        padding: 0 9px;
+        background: #eef1f5;
+        color: var(--ink);
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .id.active-id {
+        background: #dcfce7;
+        color: #14532d;
+      }
+
+      .id.archive-id {
+        background: #e0f2fe;
+        color: #075985;
+      }
+
+      .id.port-id {
+        background: #fef3c7;
+        color: #78350f;
+      }
+
+      .card h3 {
+        margin: 0;
+        font-size: 16px;
+        line-height: 1.3;
+      }
+
+      .card p {
+        margin: 9px 0 0;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+        margin-top: 11px;
+      }
+
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        min-height: 26px;
+        border-radius: 999px;
+        background: #eef1f5;
+        padding: 4px 9px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .chip.strong {
+        background: #dcfce7;
+        color: #14532d;
+      }
+
+      .chip.review {
+        background: #fef3c7;
+        color: #78350f;
+      }
+
+      .chip.risk {
+        background: #ffe4e6;
+        color: #881337;
+      }
+
+      .detail {
+        display: grid;
+        gap: 8px;
+        margin-top: 12px;
+        padding-top: 12px;
+        border-top: 1px solid var(--line);
+      }
+
+      .detail-row {
+        display: grid;
+        gap: 3px;
+      }
+
+      .detail-row b {
+        font-size: 12px;
+      }
+
+      .detail-row span {
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      .filters {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        padding-bottom: 2px;
+      }
+
+      .filter-button {
+        min-height: 36px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: var(--panel);
+        color: var(--muted);
+        cursor: pointer;
+        padding: 7px 12px;
+        white-space: nowrap;
+      }
+
+      .filter-button.active {
+        border-color: var(--ink);
+        background: var(--ink);
+        color: #fff;
+      }
+
+      .empty {
+        border: 1px dashed var(--line);
+        border-radius: 8px;
+        padding: 22px;
+        color: var(--muted);
+        text-align: center;
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      @media (min-width: 720px) {
+        .topbar {
+          grid-template-columns: 1fr;
+          padding: 18px 24px 14px;
+        }
+
+        .toolbar {
+          grid-template-columns: minmax(260px, 420px) minmax(360px, 1fr);
+          align-items: center;
+        }
+
+        main {
+          padding: 24px;
+        }
+
+        .summary-grid {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        .grid.active-grid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .grid.archive-grid,
+        .grid.port-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <header>
+        <div class="topbar">
+          <div class="title-row">
+            <h1>Axiom Review</h1>
+            <span class="status-pill"><i class="status-dot"></i> alignment hypothesis</span>
+          </div>
+          <div class="toolbar">
+            <input id="search" class="search" type="search" placeholder="Search axiom, gist, risk..." />
+            <nav class="tabs" aria-label="View">
+              <button class="tab active" data-view="overview">Overview</button>
+              <button class="tab" data-view="active">9 Active</button>
+              <button class="tab" data-view="archive">43 Archive</button>
+              <button class="tab" data-view="port">Port Queue</button>
+            </nav>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <section data-panel="overview">
+          <div class="summary-grid" id="metrics"></div>
+          <div class="map-panel">
+            <div class="section-head">
+              <h2>Archive Shape</h2>
+              <p class="section-note">旧 43 条的优势主要是覆盖面；新 9 条的优势是更像 runtime contract。</p>
+            </div>
+            <div class="migration-map" id="categoryMap"></div>
+          </div>
+        </section>
+
+        <section data-panel="active">
+          <div class="section-head">
+            <h2>9 Active Axioms</h2>
+            <p class="section-note">逐条看是否真的对齐 Zayn，而不是看起来很像。</p>
+          </div>
+          <div class="grid active-grid" id="activeGrid"></div>
+        </section>
+
+        <section data-panel="archive">
+          <div class="section-head">
+            <h2>43 Archive Axioms</h2>
+            <p class="section-note">旧内容保留为 sample/reference；这里先看 gist、优势和可移植价值。</p>
+          </div>
+          <div class="filters" id="groupFilters"></div>
+          <div class="grid archive-grid" id="archiveGrid"></div>
+        </section>
+
+        <section data-panel="port">
+          <div class="section-head">
+            <h2>Port Queue</h2>
+            <p class="section-note">候选不是 merge 指令，只表示值得和 9 条 active axioms 对齐审查。</p>
+          </div>
+          <div class="grid port-grid" id="portGrid"></div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      const groups = {
+        A: { name: "AI / Agentic", colorClass: "bar-ai" },
+        T: { name: "Technical Decision", colorClass: "bar-tech" },
+        M: { name: "Management", colorClass: "bar-mgmt" },
+        V: { name: "Trust", colorClass: "bar-trust" },
+        X: { name: "Cross-domain", colorClass: "bar-cross" },
+      };
+
+      const archiveAxioms = [
+        ["A01", "从咨询到执行", "AI 的价值从回答转向端到端交付制品。", "把成功标准、工具访问和 observe-correct 闭环说清楚。", 5, "Z01/Z07"],
+        ["A02", "AI 是放大器", "AI 放大人的意图、判断和验证能力。", "保留了人类品味和验证作为稀缺资源的判断。", 3, "Z04/Z07"],
+        ["A03", "IC 到管理者", "AI 协作要求从亲自执行转为设定上下文、方法和验收。", "能补足当前 9 条里对 delegation/manager stance 的缺口。", 5, "new or Z07"],
+        ["A04", "可靠性是管理问题", "可靠性来自预期、验证、反馈和异常处理，而不是模型本身。", "直接支撑 agent runtime 的 trust model。", 5, "Z04/Z07"],
+        ["A05", "文档即长期记忆", "文档是 agent 的显式长期记忆和共享上下文。", "需要被改写成 context lifecycle，而不是静态文档崇拜。", 4, "Z08"],
+        ["A06", "框架选择即世界观", "框架会锁定未来系统能看到和能表达的问题。", "适合保留为技术选择的 warning，不一定进入核心 9 条。", 3, "Z09"],
+        ["A07", "设计哲学决定上限", "规划驱动、任务驱动等设计哲学会限制能力天花板。", "对 agent orchestration 有用，但需要压缩成 control-axis 语言。", 3, "Z09"],
+        ["A08", "提示质量是主要杠杆", "AI 输出质量高度依赖需求、上下文和验收写法。", "部分已被 Z01/Z04 覆盖；注意不要回到 prompt-centric。", 2, "covered"],
+        ["A09", "构建者思维是护城河", "主动构建系统比被动使用工具更有长期优势。", "身份判断强，但不够可操作；适合 profile，不适合 core axiom。", 2, "profile"],
+        ["A10", "熟悉度胜过原始智能", "长期上下文和协作默契可能比单次模型能力更重要。", "对 memory/context infra 很关键，但需要证据化表达。", 4, "Z08"],
+        ["A11", "工具组合即能力扩展", "工具被组合后会产生非线性能力。", "可迁移到 MCP/tool surface，但当前 9 条没有显式覆盖。", 3, "maybe new"],
+        ["A12", "AI 原生开发范式", "软件应提供 AI 可消费的接口和状态。", "和 default path/source-of-truth 强相关，值得 port 成产品原则。", 4, "Z06/Z03"],
+        ["A13", "技术采用三阶段", "工具采用从 driver 到 co-pilot 再到 architect。", "更像观察模型，不是稳定决策 filter。", 1, "archive"],
+
+        ["T01", "基础设施优于组件", "系统瓶颈通常在基础设施和连接层，而非单点组件。", "和 context infra 主题高度相关，但会和 X03 重叠。", 4, "Z09"],
+        ["T02", "结果确定性优于过程确定性", "关注可验证结果，不死守固定步骤。", "已经被 autonomy gates 和 Z07 部分覆盖。", 3, "covered"],
+        ["T03", "上下文隔离是多 Agent 价值", "多 agent 的价值来自隔离信息域和任务状态。", "应强烈 port，直接对应 agent identity/coordination 问题。", 5, "Z08/Z09"],
+        ["T04", "数据优于观点", "有可用数据时，用数据校正观点和优先级。", "可并入 evidence ladder，但需要避免数据崇拜。", 3, "Z04"],
+        ["T05", "认知是资产，代码是消耗品", "代码生成变便宜后，理解、判断和品味升值。", "很像 Zayn profile 的核心，但不是 infra contract 本身。", 3, "profile"],
+        ["T06", "依赖拓扑优于任务数量", "耦合和依赖形状比 task count 更能决定复杂度。", "应 port；能增强 Z02 的 state transition 分析。", 5, "Z02/Z09"],
+        ["T07", "隔离-处理-验证闭环", "先隔离问题，再处理，再验证结果。", "应 port；比 Z07 更有 debug workflow 形状。", 5, "Z07/Z04"],
+        ["T08", "第一性原理方法论设计", "先问框架是否解决真实问题，而不是继承框架答案。", "有价值，但可被 Z09 控制轴原则吸收。", 3, "Z09"],
+        ["T09", "数据策略与 MDP", "数据捕获本身是第一阶段产品。", "对 OpenViking 很重要，但需要单独讨论 privacy/data loop。", 3, "review"],
+
+        ["M01", "闭环校准", "精通来自持续反馈，而非一次性完美计划。", "和 Z07 强相关，可 port 成 verification cadence。", 4, "Z07"],
+        ["M02", "逆向调试心智", "从症状倒推假设，用排除法缩小原因空间。", "应和 X02/T07 合并，而不是单独三条都进入。", 4, "Z04/Z07"],
+        ["M03", "量化优先级", "用可比较指标聚焦最大收益点。", "适合 workflow，不一定是 context core。", 2, "workflow"],
+        ["M04", "主动管理优于工具心智", "复杂系统需要管理接口、反馈和约束。", "和 A03/A04 重合，值得合并成 delegation axiom。", 4, "new"],
+        ["M05", "简单即认知效率", "简单不是少功能，而是低认知摩擦。", "值得 port 到 default path/product contract。", 4, "Z06"],
+        ["M06", "连接创造优于孤立知识", "跨域连接比单点知识更容易产生新判断。", "适合 reader/research，不一定是 repo bootstrap core。", 2, "reader"],
+        ["M07", "多线程即可持续能量", "多条兴趣线程能保持长期能量和韧性。", "偏个人能量模型，不适合 public context seed。", 1, "archive"],
+        ["M08", "自我系统化", "人、工具、日志、AI 构成混合系统。", "和 context infra 精神接近，但需要隐私边界后再 port。", 3, "review"],
+        ["M09", "AI 时代管理范式", "过程确定性转向结果确定性与科学脑评估。", "和 T02/A03 重复，适合合并。", 2, "covered"],
+        ["M10", "教育流失阶梯", "学习/传播会在多道摩擦关卡中流失。", "对课程/内容有用，不是当前 infra core。", 1, "archive"],
+
+        ["V01", "责任无法被委派", "执行可委派，问责不可委派。", "强烈建议 port；当前 9 条缺少 owner/accountability。", 5, "new"],
+        ["V02", "可验证性是信任地基", "只有可检测错误的系统才能建立信任。", "已经被 Z07 覆盖，但可以让 Z07 更锋利。", 5, "Z07"],
+        ["V03", "归因塑造感知", "可见归因会影响用户对系统的信任。", "适合 product surface，不一定是 core axiom。", 3, "Z06"],
+        ["V04", "时间锚定防止幻觉", "结论需要带时间边界和重新验证触发条件。", "建议 port 到 evidence ladder，尤其是现代事实/价格/规则。", 5, "Z04"],
+        ["V05", "信任归因双维度", "区分信任主体和信任域，避免把黑箱信任错归给系统。", "对 public demo/产品化重要；先放 review。", 3, "review"],
+
+        ["X01", "约束悖论", "能力升级会暴露新的微观约束和操作成本。", "有用但偏隐喻；可作为 X04 的支撑，不必进 core。", 2, "archive"],
+        ["X02", "系统化调试", "高价值实验应最大化信息增益，而非行动量。", "强烈建议 port；这是 Zayn debugging style 的核心。", 5, "Z04/Z07"],
+        ["X03", "效率由瓶颈决定", "系统吞吐由最紧约束决定，瓶颈会迁移。", "值得 port；能防止优化错层。", 4, "Z09"],
+        ["X04", "为真实用例设计", "最优工具取决于真实工作流和摩擦预算。", "强烈建议 port；能补足 product/design judgment。", 5, "Z06/Z09"],
+        ["X05", "精度在系统中级联", "高耦合系统中小误差会跨接口放大。", "对 data/runtime infra 有用，但可能是专题 axiom。", 3, "review"],
+        ["X06", "抓大放小系统分析", "先找最大决策点；相悖信号最有价值。", "强烈建议 port；非常适合 reader/scout 和陌生系统分析。", 5, "new"],
+      ].map(([id, title, gist, strength, fit, target]) => ({
+        id,
+        group: id[0],
+        title,
+        gist,
+        strength,
+        fit,
+        target,
+      }));
+
+      const activeAxioms = [
+        {
+          id: "Z01",
+          title: "Runtime contract > code narrative",
+          gist: "真正控制 agent 行为的是 active load path、state、tools 和 validation，不是 README 叙事。",
+          alignment: "strong",
+          why: "完全贴合这次纠正：目标是 reproduce context structure，而不是改 public framing。",
+          risk: "如果过度压低 README，会忽略 public repo 仍需要最小解释入口。",
+          question: "README 是否只保留安装/结构说明，还是也要承载轻量 public narrative？",
+          maps: "A01, A05, T08",
+        },
+        {
+          id: "Z02",
+          title: "State transition > static state",
+          gist: "关键不是状态是什么，而是如何进入、变更、持久化、恢复和可见。",
+          alignment: "strong",
+          why: "与你的 context/session/task/lifecycle 问题最直接对齐。",
+          risk: "目前还偏抽象；需要配一个 session/task lifecycle checklist。",
+          question: "你的 context infra 是否要显式建 session/task/lifecycle schema？",
+          maps: "T03, T06, X05",
+        },
+        {
+          id: "Z03",
+          title: "Source-of-truth routing",
+          gist: "先判断哪个系统拥有事实，再查文件/日志/任务/记忆。",
+          alignment: "strong",
+          why: "直接对应你对 evidence、file:line、runtime state 的偏好。",
+          risk: "source-of-truth 需要可维护 route table，否则会变成口号。",
+          question: "WORKSPACE 是否应该拆 public routes 和 private local overlay？",
+          maps: "T04, V04, X02",
+        },
+        {
+          id: "Z04",
+          title: "Evidence ladder",
+          gist: "明确区分 confirmed fact、inference、proposal。",
+          alignment: "strong",
+          why: "这是 reader 和工程 agent 都反复校准出的硬约束。",
+          risk: "缺少 temporal grounding；现代事实需要时间边界。",
+          question: "是否把 V04 时间锚定并入 Z04？",
+          maps: "T04, V02, V04",
+        },
+        {
+          id: "Z05",
+          title: "Behavior fix != cleanup",
+          gist: "修行为和清理债务是两件事，除非清理是修复路径的一部分。",
+          alignment: "medium",
+          why: "符合你的 PR/patch 期望，能防止 scope 膨胀。",
+          risk: "可能过窄，更像 coding workflow，不一定是顶层 context axiom。",
+          question: "它应保留为 core axiom，还是下沉到工程 skill？",
+          maps: "T07, M02",
+        },
+        {
+          id: "Z06",
+          title: "Default path as product contract",
+          gist: "用户/agent 自然走到的路径就是产品契约的一部分。",
+          alignment: "strong",
+          why: "贴合你对 workspace、sidebar、daemon、memory 可见性的反复关注。",
+          risk: "需要绑定具体 UI/runtime examples，避免泛化成 UX slogan。",
+          question: "是否加入 M05/X04，强化摩擦预算和真实用例？",
+          maps: "M05, X04, V03",
+        },
+        {
+          id: "Z07",
+          title: "Small patch, full verification",
+          gist: "小 diff 不等于完成；必须验证目标状态并说清 residual risk。",
+          alignment: "strong",
+          why: "高度符合你的工程协作模式。",
+          risk: "如果没有 V01 accountability，验证责任容易散。",
+          question: "是否增加 'owner cannot be delegated' 作为新 axiom？",
+          maps: "A04, T07, V01, V02",
+        },
+        {
+          id: "Z08",
+          title: "Context is runtime state, not memory text",
+          gist: "没被加载、路由或用于决策的记忆只是 archive，不是 context。",
+          alignment: "strong",
+          why: "这是这批 9 条里最像你的 context infra 核心的压缩。",
+          risk: "需要说明 OpenViking/notes/docs 分别在哪个 runtime point 生效。",
+          question: "是否要把 memory/session/task 的边界写成一张决策表？",
+          maps: "A05, A10, T03",
+        },
+        {
+          id: "Z09",
+          title: "Control axes before taxonomy",
+          gist: "分类只有映射到 identity/scope/lifecycle/ownership/evidence/verification 时才有用。",
+          alignment: "strong",
+          why: "正中你对漂亮 taxonomy 但无控制面的反感。",
+          risk: "现在覆盖太大，可能吞掉 dependency topology、bottleneck、real use case 等更尖锐模型。",
+          question: "Z09 是否应拆出 dependency topology / bottleneck / actual use case？",
+          maps: "T06, X03, X04, X06",
+        },
+      ];
+
+      const views = new Set(["overview", "active", "archive", "port"]);
+
+      const state = {
+        view: views.has(location.hash.slice(1)) ? location.hash.slice(1) : "overview",
+        group: "all",
+        query: "",
+      };
+
+      const metricData = () => {
+        const high = archiveAxioms.filter((item) => item.fit >= 5).length;
+        const medium = archiveAxioms.filter((item) => item.fit === 4).length;
+        return [
+          ["43", "upstream axioms as reference archive"],
+          ["9", "active Zayn decision filters"],
+          [String(high), "high port candidates"],
+          [String(medium), "medium candidates"],
+        ];
+      };
+
+      const visibleText = (item) =>
+        [item.id, item.title, item.gist, item.strength, item.target, item.why, item.risk, item.question, item.maps]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
+
+      const matches = (item) => visibleText(item).includes(state.query.toLowerCase());
+
+      function renderMetrics() {
+        const metrics = document.getElementById("metrics");
+        metrics.innerHTML = metricData()
+          .map(
+            ([value, label]) => `
+              <article class="metric">
+                <strong>${value}</strong>
+                <span>${label}</span>
+              </article>
+            `,
+          )
+          .join("");
+      }
+
+      function renderCategoryMap() {
+        const container = document.getElementById("categoryMap");
+        const counts = Object.keys(groups).map((key) => ({
+          key,
+          label: groups[key].name,
+          value: archiveAxioms.filter((item) => item.group === key).length,
+          colorClass: groups[key].colorClass,
+        }));
+        const max = Math.max(...counts.map((item) => item.value));
+        container.innerHTML = counts
+          .map(
+            (item) => `
+              <div class="bar-row">
+                <span>${item.label}</span>
+                <div class="bar-track">
+                  <div class="bar-fill ${item.colorClass}" style="width:${(item.value / max) * 100}%"></div>
+                </div>
+                <b>${item.value}</b>
+              </div>
+            `,
+          )
+          .join("");
+      }
+
+      function activeCard(item) {
+        const statusClass = item.alignment === "strong" ? "strong" : "review";
+        return `
+          <article class="card">
+            <div class="card-head">
+              <div>
+                <span class="id active-id">${item.id}</span>
+                <h3>${item.title}</h3>
+              </div>
+              <span class="chip ${statusClass}">${item.alignment}</span>
+            </div>
+            <p>${item.gist}</p>
+            <div class="detail">
+              <div class="detail-row"><b>为什么像 Zayn</b><span>${item.why}</span></div>
+              <div class="detail-row"><b>风险</b><span>${item.risk}</span></div>
+              <div class="detail-row"><b>需要对齐</b><span>${item.question}</span></div>
+              <div class="detail-row"><b>旧 axiom 映射</b><span>${item.maps}</span></div>
+            </div>
+          </article>
+        `;
+      }
+
+      function archiveCard(item, compact = false) {
+        const chip = item.fit >= 5 ? "strong" : item.fit >= 4 ? "review" : "";
+        const label = item.fit >= 5 ? "high port" : item.fit >= 4 ? "review" : "archive";
+        return `
+          <article class="card">
+            <div class="card-head">
+              <div>
+                <span class="id ${compact ? "port-id" : "archive-id"}">${item.id}</span>
+                <h3>${item.title}</h3>
+              </div>
+              <span class="chip ${chip}">${label}</span>
+            </div>
+            <p>${item.gist}</p>
+            <div class="detail">
+              <div class="detail-row"><b>优势</b><span>${item.strength}</span></div>
+              <div class="detail-row"><b>Port target</b><span>${item.target}</span></div>
+            </div>
+          </article>
+        `;
+      }
+
+      function renderActive() {
+        const items = activeAxioms.filter(matches);
+        document.getElementById("activeGrid").innerHTML = items.length
+          ? items.map(activeCard).join("")
+          : `<div class="empty">No active axioms match.</div>`;
+      }
+
+      function renderFilters() {
+        const filters = document.getElementById("groupFilters");
+        const buttons = [
+          ["all", "All"],
+          ...Object.entries(groups).map(([key, value]) => [key, value.name]),
+        ];
+        filters.innerHTML = buttons
+          .map(
+            ([key, label]) =>
+              `<button class="filter-button ${state.group === key ? "active" : ""}" data-group="${key}">${label}</button>`,
+          )
+          .join("");
+        filters.querySelectorAll("button").forEach((button) => {
+          button.addEventListener("click", () => {
+            state.group = button.dataset.group;
+            render();
+          });
+        });
+      }
+
+      function renderArchive() {
+        const items = archiveAxioms
+          .filter((item) => state.group === "all" || item.group === state.group)
+          .filter(matches);
+        document.getElementById("archiveGrid").innerHTML = items.length
+          ? items.map((item) => archiveCard(item)).join("")
+          : `<div class="empty">No archive axioms match.</div>`;
+      }
+
+      function renderPort() {
+        const items = archiveAxioms
+          .filter((item) => item.fit >= 4)
+          .filter(matches)
+          .sort((a, b) => b.fit - a.fit || a.id.localeCompare(b.id));
+        document.getElementById("portGrid").innerHTML = items.length
+          ? items.map((item) => archiveCard(item, true)).join("")
+          : `<div class="empty">No port candidates match.</div>`;
+      }
+
+      function syncPanels() {
+        document.querySelectorAll("[data-panel]").forEach((panel) => {
+          panel.classList.toggle("hidden", panel.dataset.panel !== state.view);
+        });
+        document.querySelectorAll(".tab").forEach((tab) => {
+          tab.classList.toggle("active", tab.dataset.view === state.view);
+        });
+      }
+
+      function render() {
+        syncPanels();
+        renderMetrics();
+        renderCategoryMap();
+        renderActive();
+        renderFilters();
+        renderArchive();
+        renderPort();
+      }
+
+      document.querySelectorAll(".tab").forEach((tab) => {
+        tab.addEventListener("click", () => {
+          state.view = tab.dataset.view;
+          history.replaceState(null, "", `#${state.view}`);
+          render();
+        });
+      });
+
+      document.getElementById("search").addEventListener("input", (event) => {
+        state.query = event.target.value.trim();
+        render();
+      });
+
+      window.addEventListener("hashchange", () => {
+        const next = location.hash.slice(1);
+        if (views.has(next)) {
+          state.view = next;
+          render();
+        }
+      });
+
+      render();
+    </script>
+  </body>
+</html>
