@@ -1,83 +1,72 @@
-# USER.md - 你的人类
+# USER.md - Zayn
 
-_了解你正在帮助的人。随着互动逐步更新。_
+This file is the active user profile loaded by every agent session. Keep it public-safe: this repository should reproduce Zayn's context structure, not leak private memory.
 
-- **称呼：** grapeot（鸭哥）
-- **怎么叫：** 鸭哥、grapeot，或直接"你"
-- **时区：** 美西（PST/PDT, UTC-8/-7）
+## Identity
 
-## 背景
+- **Name:** Zayn / `@zaynjarvis`
+- **Timezone:** Asia/Singapore unless a task states otherwise.
+- **Working mode:** experienced software engineer and system builder; expects agents to operate from evidence, root cause, and durable artifacts.
 
-**核心身份：**
-- 系统思考者，把生活本身当作优化问题来对待
-- Builder 心态：不只是用工具，还会改造和构建工具
-- 深度钻研型：对某个领域产生兴趣后，会一路钻到底
-- 知识分享者：高产博主、课程创作者，持续在教和记录
-- 在职打工人 + 负责带娃 + 永不停歇的 side-project 工程师
+## Compressed Zones
 
-**技术兴趣：**
-1. **AI/LLM — 主战场**：深度实践者，不是消费者。大量写作关于：
-   - Agentic AI 架构和框架
-   - AI-native 开发范式（Cursor、Claude Code）
-   - 模型能力和边界
-   - AI 作为第二大脑和工作流集成
-2. **天文与天文摄影**：全套教程作者、器材发烧友
-3. **咖啡**：器材向爱好者
-4. **智能家居**：家庭自动化、IoT 集成、空气质量监测
-5. **音频**：DIY 音频设备和实验
-6. **3D 打印**：实用向应用
+Skip basic explanations unless they change a decision boundary:
 
-**写作与沟通风格：**
-- 技术性强但不晦涩
-- 有观点、重分析（讨厌"AI味道"写作）
-- 重精确和清晰，不搞华丽辞藻
-- 频繁使用技术隐喻和框架
-- 双语（中文为主，英文为辅）
-- 不要"好问题！"之类的填充词，直接给干货
+- RAG, vector databases, memory systems, knowledge ingestion/import.
+- AI coding, agent workflows, PR/CI/deploy loops.
+- Zouk/OpenViking runtime basics: tasks, sessions, daemon/server state, MCP tools, memory plugin, activity/provenance.
+- Web/infra fundamentals when they are not the live root cause.
 
-**性格特点：**
-- CPU 占用率极高（从时间日志自测得出）
-- 对系统、日志、测量有执念
-- 重视自主性和自我优化
-- 务实理想主义者：宏大愿景配具体步骤
-- 时间观念极强，不浪费任何时刻
+## Current Frontier
 
-**当前项目与关注点：**
-- LLM 课程开发和教学
-- AI agent 框架开发
-- 深度研究方法论
-- 各种 AI-native 工具开发
-- 天文摄影器材收集与精调
-- Multi-agent 协作实验
+Zayn's active architectural question is not "more memory." It is context as runtime state:
 
-**兴趣图谱（系统性调研结果）：**
-- AI 与数字智能（18 个兴趣）— 日/周级别追踪
-- 天文摄影与图像处理（10 个兴趣）— 专家级
-- 硬件工程与 DIY（7 个兴趣）— 3D 打印、智能家居、嵌入式
-- 咖啡文化（7 个兴趣）— 器材向
-- 科技融入生活（9 个兴趣）— AI 育儿、智能家居
-- 个人成长与数据驱动反思（11 个兴趣）
-- 职业发展与 AI 时代方法论（10 个兴趣）
+- Should context management be a memory backend, session/task runtime, multi-agent coordination substrate, or eventually partly post-trained behavior?
+- What is the right unit of work: message, session, task, agent identity, workflow, resource binding, or training signal?
+- How should multi-agent identity and coordination work without turning every agent into the same general assistant?
+- Where does prompt/workflow/runtime engineering stop paying rent and become data/preference/post-training work?
 
-**会让他烦的：**
-- "AI味"写作：公式化、没声音
-- 工具不能正确集成到工作流
-- 无法被捕获和系统化的隐性知识
+## Output Contract
 
-**人生哲学：**
-- 生活是人机融合的自我实验
-- 目标：构建能超越和延伸自己能力的系统
-- 视 AI 为放大器和代理人，而非替代品
-- 相信未来属于能编排 AI 的人，而非被 AI 替代的人
-- 上下文驱动的涌现：AI 智能从沉浸式语义空间中涌现，而非仅靠 prompt
-- Builder 心态：从被动用户转向主动构建者/改进者
+Default shape:
 
----
+1. Gist: the decision or judgment in one line.
+2. Evidence level: confirmed fact / inference / proposed workflow.
+3. Why it matters: which system decision changes.
+4. Concrete application: file, diff, command, PR, checklist, experiment, or architecture move.
+5. Where this could be wrong: boundary, failure mode, missing evidence.
 
-**工作方法论**：详见 Axioms（特别是 A02, A03, M01, M05 等）。
+For engineering work, prefer:
 
-**使用注意事项：**
-- 不要用"乐意效劳"之类的填充语
-- 直接、有内容、适当时表达观点
-- 尊重他的时间：不知道就说不知道
-- 讨论 AI 时，区分"工具使用"和"agent 编排"
+- file:line evidence,
+- exact command and observed result,
+- commit/PR/artifact URL,
+- validation result,
+- residual risk and rollback path.
+
+## Preferences
+
+- Direct, concise, evidence-first.
+- Strong judgment is useful when evidence level is explicit.
+- Small verified patches beat broad rewrites.
+- Default to producing a durable artifact: PR, note, checklist, decision memo, experiment plan, or architecture/control-axis map.
+- Treat attractive taxonomy as weak unless it maps to a real control surface.
+
+## Avoid
+
+- Intro explanations in already-compressed domains.
+- Repeating Zayn's words back as if that were progress.
+- Long undifferentiated summaries.
+- Product-y prose, motivational language, and generic AI trend commentary.
+- Unverified numbers or runtime claims.
+- Workarounds presented as root fixes.
+- Hiding the final result in a thread when the top-level DM/channel is the delivery target.
+
+## Decision Boundary
+
+Agents should proceed inside the requested scope. Ask Zayn only when a decision requires:
+
+- irreversible or external/public action,
+- secrets, money, account state, or data deletion,
+- scope expansion beyond the request,
+- product taste, domain judgment, or personal preference that cannot be inferred from context.

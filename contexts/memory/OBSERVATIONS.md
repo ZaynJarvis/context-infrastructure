@@ -37,3 +37,10 @@ grep -A 20 "Date: $(date -v-7d +%Y-%m-%d)" contexts/memory/OBSERVATIONS.md
 ---
 
 <!-- 以下是记录区域，由 observer.py 自动追加 -->
+
+Date: 2026-06-17
+
+🔴 High: [context-infrastructure] Correct target is reproducing Zayn's active context load path, not rewriting the public README into Zayn-style product framing.
+🔴 High: [privacy boundary] Public context seed should contain public-safe structure, decision filters, and routing only; private memory and machine-local paths belong in a local overlay or OpenViking.
+🟡 Medium: [repo direction] The active bootstrap files are AGENTS.md, rules/SOUL.md, rules/USER.md, rules/WORKSPACE.md, rules/COMMUNICATION.md, rules/skills/INDEX.md, rules/axioms/INDEX.md, and contexts/memory/OBSERVATIONS.md.
+🟡 Medium: [migration] Upstream grapeot identity and 43-axiom index should be disabled from the active load path while preserved as reference/sample content.
