@@ -7,103 +7,340 @@
     <style>
       :root {
         color-scheme: light;
-        --bg: #f6f7f9;
-        --panel: #ffffff;
-        --ink: #171717;
-        --muted: #5d6470;
-        --line: #d9dee7;
-        --teal: #0f8b8d;
-        --blue: #2563eb;
-        --rose: #e11d48;
-        --amber: #b7791f;
-        --green: #15803d;
-        --violet: #7c3aed;
-        --shadow: 0 12px 30px rgba(23, 23, 23, 0.08);
+        --bg: #f7f5f0;
+        --panel: #fffdf8;
+        --panel-soft: #f1eee7;
+        --ink: #1f2328;
+        --muted: #68645d;
+        --line: #ddd6c9;
+        --line-strong: #cfc5b4;
+        --teal: #517c76;
+        --teal-soft: #dfece7;
+        --amber: #a9793d;
+        --amber-soft: #f1e3cf;
+        --blue: #486f9f;
+        --shadow: 0 16px 42px rgba(55, 47, 36, 0.09);
+        --radius: 8px;
       }
 
-      * {
-        box-sizing: border-box;
-      }
+      * { box-sizing: border-box; }
 
       body {
         margin: 0;
-        background: var(--bg);
+        background:
+          radial-gradient(circle at top left, rgba(223, 236, 231, 0.75), transparent 30rem),
+          linear-gradient(180deg, #fbfaf6 0%, var(--bg) 46%, #f2efe8 100%);
         color: var(--ink);
-        font-family:
-          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-          sans-serif;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         letter-spacing: 0;
       }
 
       button,
-      input {
-        font: inherit;
+      input { font: inherit; }
+
+      button { -webkit-tap-highlight-color: transparent; }
+
+      .app { min-height: 100vh; }
+
+      .hero {
+        width: min(1160px, 100%);
+        margin: 0 auto;
+        padding: 18px 16px 8px;
       }
 
-      .app {
-        min-height: 100vh;
-      }
-
-      header {
-        position: sticky;
-        top: 0;
-        z-index: 20;
-        border-bottom: 1px solid var(--line);
-        background: rgba(246, 247, 249, 0.94);
-        backdrop-filter: blur(14px);
-      }
-
-      .topbar {
-        display: grid;
-        gap: 12px;
-        padding: 14px 16px 12px;
-      }
-
-      .title-row {
+      .topline {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 12px;
+        gap: 14px;
+        margin-bottom: 28px;
       }
 
-      h1 {
-        margin: 0;
-        font-size: 20px;
-        line-height: 1.15;
-        font-weight: 760;
-      }
-
-      .status-pill {
+      .brand {
         display: inline-flex;
         align-items: center;
-        gap: 7px;
-        min-height: 32px;
+        gap: 9px;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 760;
+        letter-spacing: 0;
+        text-transform: uppercase;
+      }
+
+      .brand-mark {
+        width: 22px;
+        height: 22px;
+        border: 1px solid var(--line-strong);
+        border-radius: 7px;
+        background: linear-gradient(135deg, var(--panel), var(--teal-soft));
+      }
+
+      .quiet-note {
         border: 1px solid var(--line);
         border-radius: 999px;
-        background: var(--panel);
-        padding: 6px 10px;
+        background: rgba(255, 253, 248, 0.78);
+        padding: 7px 10px;
         color: var(--muted);
         font-size: 12px;
         white-space: nowrap;
       }
 
-      .status-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 99px;
-        background: var(--amber);
+      .hero-grid {
+        display: grid;
+        gap: 24px;
+        align-items: center;
       }
+
+      .kicker {
+        margin: 0 0 10px;
+        color: var(--teal);
+        font-size: 12px;
+        font-weight: 760;
+        letter-spacing: 0;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        max-width: 760px;
+        margin: 0;
+        font-size: 38px;
+        line-height: 0.98;
+        letter-spacing: 0;
+        font-weight: 780;
+      }
+
+      h1 span { display: block; }
+
+      .lead {
+        max-width: 650px;
+        margin: 18px 0 0;
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.65;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 22px;
+      }
+
+      .nav-button,
+      .filter-button {
+        min-height: 40px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255, 253, 248, 0.82);
+        color: var(--muted);
+        cursor: pointer;
+        padding: 8px 13px;
+      }
+
+      .nav-button.active,
+      .filter-button.active {
+        border-color: var(--ink);
+        background: var(--ink);
+        color: #fff;
+      }
+
+      .axiom-visual {
+        position: relative;
+        min-height: 320px;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background:
+          linear-gradient(135deg, rgba(255, 253, 248, 0.96), rgba(237, 232, 222, 0.82)),
+          radial-gradient(circle at 74% 42%, rgba(81, 124, 118, 0.2), transparent 18rem);
+        box-shadow: var(--shadow);
+      }
+
+      .archive-slips {
+        position: absolute;
+        left: 18px;
+        top: 36px;
+        width: 34%;
+        height: 72%;
+        opacity: 0.56;
+        filter: blur(0.2px);
+      }
+
+      .slip {
+        position: absolute;
+        width: 78px;
+        height: 18px;
+        border: 1px solid rgba(207, 197, 180, 0.8);
+        border-radius: 5px;
+        background: rgba(255, 253, 248, 0.8);
+        transform: rotate(var(--r));
+      }
+
+      .slip:nth-child(1) { left: 4px; top: 8px; --r: -8deg; }
+      .slip:nth-child(2) { left: 38px; top: 38px; --r: 5deg; }
+      .slip:nth-child(3) { left: 12px; top: 72px; --r: 2deg; }
+      .slip:nth-child(4) { left: 52px; top: 106px; --r: -5deg; }
+      .slip:nth-child(5) { left: 4px; top: 146px; --r: 7deg; }
+      .slip:nth-child(6) { left: 64px; top: 176px; --r: -3deg; }
+      .slip:nth-child(7) { left: 22px; top: 216px; --r: 4deg; }
+
+      .filter-stack {
+        position: absolute;
+        left: 30%;
+        right: 12%;
+        top: 34%;
+        display: grid;
+        grid-template-columns: repeat(9, minmax(0, 1fr));
+        gap: 6px;
+        transform: perspective(700px) rotateX(7deg);
+      }
+
+      .filter-card {
+        position: relative;
+        aspect-ratio: 0.58;
+        border: 1px solid rgba(81, 124, 118, 0.32);
+        border-radius: 7px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.66), rgba(223, 236, 231, 0.42));
+        box-shadow: 0 12px 28px rgba(50, 65, 61, 0.12);
+        backdrop-filter: blur(5px);
+      }
+
+      .filter-card::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 10px;
+        height: 10px;
+        border: 1px solid var(--teal);
+        border-radius: var(--shape, 50%);
+        transform: translate(-50%, -50%) rotate(var(--rot, 0deg));
+        opacity: 0.86;
+      }
+
+      .filter-card:nth-child(2)::after { --shape: 1px; width: 16px; height: 2px; background: var(--teal); }
+      .filter-card:nth-child(3)::after { --shape: 2px; }
+      .filter-card:nth-child(4)::after { width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 11px solid var(--amber); border-top: 0; }
+      .filter-card:nth-child(5)::after { width: 14px; height: 14px; border-radius: 50%; }
+      .filter-card:nth-child(6)::after { --rot: 45deg; --shape: 2px; }
+      .filter-card:nth-child(7)::after { width: 3px; height: 16px; background: var(--blue); border: 0; border-radius: 4px; }
+      .filter-card:nth-child(8)::after { width: 14px; height: 8px; border-radius: 50%; }
+      .filter-card:nth-child(9)::after { width: 16px; height: 16px; border-radius: 4px; border-color: var(--amber); }
+
+      .runtime-path {
+        position: absolute;
+        left: 66%;
+        right: 26px;
+        top: 70%;
+        height: 2px;
+        background: linear-gradient(90deg, var(--teal), var(--blue));
+      }
+
+      .runtime-path::before {
+        content: "";
+        position: absolute;
+        left: -46px;
+        top: -5px;
+        width: 48px;
+        height: 12px;
+        border-radius: 999px;
+        background: rgba(81, 124, 118, 0.18);
+      }
+
+      main {
+        display: grid;
+        gap: 18px;
+        width: min(1160px, 100%);
+        margin: 0 auto;
+        padding: 16px 16px 36px;
+      }
+
+      section { display: grid; gap: 14px; }
+
+      .panel {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: rgba(255, 253, 248, 0.72);
+        box-shadow: var(--shadow);
+      }
+
+      .panel-pad { padding: 16px; }
+
+      .section-head {
+        display: grid;
+        gap: 7px;
+        margin-bottom: 2px;
+      }
+
+      h2 {
+        margin: 0;
+        font-size: 20px;
+        line-height: 1.2;
+        letter-spacing: 0;
+      }
+
+      .section-note {
+        margin: 0;
+        max-width: 720px;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.55;
+      }
+
+      .lens-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .lens {
+        min-height: 104px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--panel);
+        padding: 13px;
+      }
+
+      .lens strong {
+        display: block;
+        font-size: 30px;
+        letter-spacing: 0;
+      }
+
+      .lens span {
+        display: block;
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.4;
+      }
+
+      .decision-list { display: grid; gap: 8px; }
+
+      .decision {
+        display: grid;
+        gap: 5px;
+        border-top: 1px solid var(--line);
+        padding: 12px 0 4px;
+      }
+
+      .decision:first-child { border-top: 0; padding-top: 0; }
+
+      .decision b { font-size: 13px; }
+
+      .decision span { color: var(--muted); font-size: 13px; line-height: 1.45; }
 
       .toolbar {
         display: grid;
-        gap: 10px;
+        gap: 12px;
+        align-items: center;
       }
 
       .search {
         width: 100%;
-        min-height: 44px;
+        min-height: 42px;
         border: 1px solid var(--line);
-        border-radius: 8px;
+        border-radius: var(--radius);
         background: var(--panel);
         color: var(--ink);
         padding: 0 13px;
@@ -111,166 +348,28 @@
       }
 
       .search:focus {
-        border-color: var(--blue);
-        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        border-color: var(--teal);
+        box-shadow: 0 0 0 3px rgba(81, 124, 118, 0.15);
       }
 
-      .tabs {
-        display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        border: 1px solid var(--line);
-        border-radius: 8px;
-        overflow: hidden;
-        background: var(--panel);
-      }
-
-      .tab {
-        min-height: 40px;
-        border: 0;
-        border-right: 1px solid var(--line);
-        background: transparent;
-        color: var(--muted);
-        cursor: pointer;
-        padding: 7px 4px;
-        font-size: 13px;
-      }
-
-      .tab:last-child {
-        border-right: 0;
-      }
-
-      .tab.active {
-        background: var(--ink);
-        color: #ffffff;
-      }
-
-      main {
-        display: grid;
-        gap: 18px;
-        width: min(1180px, 100%);
-        margin: 0 auto;
-        padding: 16px;
-      }
-
-      section {
-        display: grid;
-        gap: 12px;
-      }
-
-      h2 {
-        margin: 0;
-        font-size: 16px;
-        line-height: 1.2;
-      }
-
-      .section-head {
+      .filters {
         display: flex;
-        align-items: flex-end;
-        justify-content: space-between;
-        gap: 12px;
-      }
-
-      .section-note {
-        margin: 0;
-        color: var(--muted);
-        font-size: 13px;
-        line-height: 1.45;
-      }
-
-      .summary-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 10px;
-      }
-
-      .metric {
-        min-height: 96px;
-        border: 1px solid var(--line);
-        border-radius: 8px;
-        background: var(--panel);
-        padding: 13px;
-        box-shadow: var(--shadow);
-      }
-
-      .metric strong {
-        display: block;
-        font-size: 28px;
-        line-height: 1;
-      }
-
-      .metric span {
-        display: block;
-        margin-top: 8px;
-        color: var(--muted);
-        font-size: 12px;
-        line-height: 1.35;
-      }
-
-      .map-panel {
-        border: 1px solid var(--line);
-        border-radius: 8px;
-        background: var(--panel);
-        padding: 14px;
-        box-shadow: var(--shadow);
-      }
-
-      .migration-map {
-        display: grid;
-        gap: 11px;
-      }
-
-      .bar-row {
-        display: grid;
-        grid-template-columns: 76px 1fr 44px;
-        align-items: center;
         gap: 8px;
-        font-size: 12px;
+        overflow-x: auto;
+        padding-bottom: 2px;
       }
 
-      .bar-track {
-        height: 12px;
-        overflow: hidden;
-        border-radius: 99px;
-        background: #eef1f5;
-      }
-
-      .bar-fill {
-        height: 100%;
-        border-radius: inherit;
-      }
-
-      .bar-ai {
-        background: var(--blue);
-      }
-
-      .bar-tech {
-        background: var(--teal);
-      }
-
-      .bar-mgmt {
-        background: var(--green);
-      }
-
-      .bar-trust {
-        background: var(--rose);
-      }
-
-      .bar-cross {
-        background: var(--violet);
-      }
-
-      .grid {
-        display: grid;
-        gap: 10px;
-      }
+      .grid { display: grid; gap: 10px; }
 
       .card {
         border: 1px solid var(--line);
-        border-radius: 8px;
+        border-radius: var(--radius);
         background: var(--panel);
         padding: 13px;
-        box-shadow: var(--shadow);
       }
+
+      .card.is-strong { border-left: 4px solid var(--teal); }
+      .card.is-review { border-left: 4px solid var(--amber); }
 
       .card-head {
         display: flex;
@@ -283,221 +382,188 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        min-width: 44px;
-        height: 28px;
+        min-width: 42px;
+        height: 26px;
         border-radius: 999px;
         padding: 0 9px;
-        background: #eef1f5;
+        background: var(--panel-soft);
         color: var(--ink);
         font-size: 12px;
-        font-weight: 700;
-      }
-
-      .id.active-id {
-        background: #dcfce7;
-        color: #14532d;
-      }
-
-      .id.archive-id {
-        background: #e0f2fe;
-        color: #075985;
-      }
-
-      .id.port-id {
-        background: #fef3c7;
-        color: #78350f;
+        font-weight: 760;
       }
 
       .card h3 {
-        margin: 0;
+        margin: 8px 0 0;
         font-size: 16px;
-        line-height: 1.3;
+        line-height: 1.32;
       }
 
       .card p {
         margin: 9px 0 0;
         color: var(--muted);
         font-size: 13px;
-        line-height: 1.5;
-      }
-
-      .meta {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 7px;
-        margin-top: 11px;
+        line-height: 1.52;
       }
 
       .chip {
         display: inline-flex;
         align-items: center;
-        min-height: 26px;
+        min-height: 25px;
         border-radius: 999px;
-        background: #eef1f5;
+        background: var(--panel-soft);
         padding: 4px 9px;
         color: var(--muted);
         font-size: 12px;
-      }
-
-      .chip.strong {
-        background: #dcfce7;
-        color: #14532d;
-      }
-
-      .chip.review {
-        background: #fef3c7;
-        color: #78350f;
-      }
-
-      .chip.risk {
-        background: #ffe4e6;
-        color: #881337;
-      }
-
-      .detail {
-        display: grid;
-        gap: 8px;
-        margin-top: 12px;
-        padding-top: 12px;
-        border-top: 1px solid var(--line);
-      }
-
-      .detail-row {
-        display: grid;
-        gap: 3px;
-      }
-
-      .detail-row b {
-        font-size: 12px;
-      }
-
-      .detail-row span {
-        color: var(--muted);
-        font-size: 13px;
-        line-height: 1.45;
-      }
-
-      .filters {
-        display: flex;
-        gap: 8px;
-        overflow-x: auto;
-        padding-bottom: 2px;
-      }
-
-      .filter-button {
-        min-height: 36px;
-        border: 1px solid var(--line);
-        border-radius: 999px;
-        background: var(--panel);
-        color: var(--muted);
-        cursor: pointer;
-        padding: 7px 12px;
         white-space: nowrap;
       }
 
-      .filter-button.active {
-        border-color: var(--ink);
-        background: var(--ink);
-        color: #fff;
+      .chip.strong { background: var(--teal-soft); color: #2d5e58; }
+      .chip.review { background: var(--amber-soft); color: #76501d; }
+
+      details {
+        margin-top: 12px;
+        border-top: 1px solid var(--line);
+        padding-top: 10px;
       }
+
+      summary {
+        cursor: pointer;
+        color: var(--ink);
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .detail { display: grid; gap: 8px; margin-top: 10px; }
+
+      .detail-row { display: grid; gap: 3px; }
+      .detail-row b { font-size: 12px; }
+      .detail-row span { color: var(--muted); font-size: 13px; line-height: 1.45; }
+
+      .port-list { display: grid; gap: 8px; }
+
+      .port-row {
+        display: grid;
+        grid-template-columns: 52px 1fr auto;
+        gap: 10px;
+        align-items: center;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--panel);
+        padding: 11px;
+      }
+
+      .port-row h3 { margin: 0; font-size: 15px; }
+      .port-row p { margin: 4px 0 0; color: var(--muted); font-size: 13px; line-height: 1.4; }
 
       .empty {
         border: 1px dashed var(--line);
-        border-radius: 8px;
+        border-radius: var(--radius);
         padding: 22px;
         color: var(--muted);
         text-align: center;
       }
 
-      .hidden {
-        display: none !important;
-      }
+      .hidden { display: none !important; }
 
-      @media (min-width: 720px) {
-        .topbar {
-          grid-template-columns: 1fr;
-          padding: 18px 24px 14px;
-        }
+      [data-panel] { scroll-margin-top: 16px; }
 
-        .toolbar {
-          grid-template-columns: minmax(260px, 420px) minmax(360px, 1fr);
-          align-items: center;
-        }
-
-        main {
-          padding: 24px;
-        }
-
-        .summary-grid {
-          grid-template-columns: repeat(4, minmax(0, 1fr));
-        }
-
-        .grid.active-grid {
-          grid-template-columns: repeat(3, minmax(0, 1fr));
-        }
-
-        .grid.archive-grid,
-        .grid.port-grid {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
+      @media (min-width: 760px) {
+        .hero { padding: 24px 24px 10px; }
+        .hero-grid { grid-template-columns: 0.95fr 1.05fr; gap: 30px; }
+        h1 { font-size: 68px; }
+        .axiom-visual { min-height: 360px; }
+        main { padding: 18px 24px 48px; }
+        .control-grid { grid-template-columns: 0.95fr 1.05fr; }
+        .toolbar { grid-template-columns: minmax(260px, 420px) 1fr; }
+        .grid.active-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .grid.archive-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       }
     </style>
   </head>
   <body>
     <div class="app">
-      <header>
-        <div class="topbar">
-          <div class="title-row">
-            <h1>Axiom Review</h1>
-            <span class="status-pill"><i class="status-dot"></i> alignment hypothesis</span>
+      <header class="hero">
+        <div class="topline">
+          <div class="brand"><span class="brand-mark"></span> Zayn Axiom Review</div>
+          <span class="quiet-note">quiet rebuild</span>
+        </div>
+
+        <div class="hero-grid">
+          <div>
+            <p class="kicker">From archive to active filters</p>
+            <h1><span>43 old axioms stay archived.</span><span>9 active axioms define the runtime path.</span></h1>
+            <p class="lead">
+              这版不再把所有内容同时推到你眼前。先看当前 9 条是否真的控制判断；旧 43 条只作为候选输入，按需展开。
+            </p>
+            <div class="hero-actions" aria-label="Primary views">
+              <button class="nav-button active" data-view="active">Active 9</button>
+              <button class="nav-button" data-view="port">Port candidates</button>
+              <button class="nav-button" data-view="archive">Archive</button>
+            </div>
           </div>
-          <div class="toolbar">
-            <input id="search" class="search" type="search" placeholder="Search axiom, gist, risk..." />
-            <nav class="tabs" aria-label="View">
-              <button class="tab active" data-view="overview">Overview</button>
-              <button class="tab" data-view="active">9 Active</button>
-              <button class="tab" data-view="archive">43 Archive</button>
-              <button class="tab" data-view="port">Port Queue</button>
-            </nav>
-          </div>
+
+          <figure class="axiom-visual" aria-label="43 archive inputs passing through 9 decision filters into one runtime path">
+            <div class="archive-slips" aria-hidden="true">
+              <span class="slip"></span><span class="slip"></span><span class="slip"></span><span class="slip"></span>
+              <span class="slip"></span><span class="slip"></span><span class="slip"></span>
+            </div>
+            <div class="filter-stack" aria-hidden="true">
+              <span class="filter-card"></span><span class="filter-card"></span><span class="filter-card"></span>
+              <span class="filter-card"></span><span class="filter-card"></span><span class="filter-card"></span>
+              <span class="filter-card"></span><span class="filter-card"></span><span class="filter-card"></span>
+            </div>
+            <span class="runtime-path" aria-hidden="true"></span>
+          </figure>
         </div>
       </header>
 
       <main>
-        <section data-panel="overview">
-          <div class="summary-grid" id="metrics"></div>
-          <div class="map-panel">
+        <section class="panel panel-pad control-grid">
+          <div>
             <div class="section-head">
-              <h2>Archive Shape</h2>
-              <p class="section-note">旧 43 条的优势主要是覆盖面；新 9 条的优势是更像 runtime contract。</p>
+              <h2>Decision surface</h2>
+              <p class="section-note">这页只回答一个问题：哪些 axiom 应该进入你的 active context load path，哪些只适合留在 archive。</p>
             </div>
-            <div class="migration-map" id="categoryMap"></div>
+            <div class="lens-grid" id="metrics"></div>
+          </div>
+          <div>
+            <div class="section-head">
+              <h2>Open decisions</h2>
+              <p class="section-note">先审这些，不要从 43 条从头读。</p>
+            </div>
+            <div class="decision-list" id="decisionFeed"></div>
           </div>
         </section>
 
-        <section data-panel="active">
+        <section class="panel panel-pad">
+          <div class="toolbar">
+            <input id="search" class="search" type="search" placeholder="Search when you need the archive..." />
+            <div class="filters" id="groupFilters"></div>
+          </div>
+        </section>
+
+        <section class="panel panel-pad" data-panel="active">
           <div class="section-head">
-            <h2>9 Active Axioms</h2>
-            <p class="section-note">逐条看是否真的对齐 Zayn，而不是看起来很像。</p>
+            <h2>9 active decision filters</h2>
+            <p class="section-note">默认只露出 gist 和 open question。Why/risk/maps 收进 details，避免首屏变成报告。</p>
           </div>
           <div class="grid active-grid" id="activeGrid"></div>
         </section>
 
-        <section data-panel="archive">
+        <section class="panel panel-pad hidden" data-panel="port">
           <div class="section-head">
-            <h2>43 Archive Axioms</h2>
-            <p class="section-note">旧内容保留为 sample/reference；这里先看 gist、优势和可移植价值。</p>
+            <h2>Port candidates</h2>
+            <p class="section-note">候选不是 merge 指令。它们只是最值得拿来挑战 9 条 active axioms 的旧模型。</p>
           </div>
-          <div class="filters" id="groupFilters"></div>
-          <div class="grid archive-grid" id="archiveGrid"></div>
+          <div class="port-list" id="portGrid"></div>
         </section>
 
-        <section data-panel="port">
+        <section class="panel panel-pad hidden" data-panel="archive">
           <div class="section-head">
-            <h2>Port Queue</h2>
-            <p class="section-note">候选不是 merge 指令，只表示值得和 9 条 active axioms 对齐审查。</p>
+            <h2>Archive</h2>
+            <p class="section-note">旧 43 条保留为 reference。只有当你要找反例、迁移候选、或旧模型优势时才展开。</p>
           </div>
-          <div class="grid port-grid" id="portGrid"></div>
+          <div class="grid archive-grid" id="archiveGrid"></div>
         </section>
       </main>
     </div>
@@ -662,10 +728,10 @@
         },
       ];
 
-      const views = new Set(["overview", "active", "archive", "port"]);
+      const views = new Set(["active", "port", "archive"]);
 
       const state = {
-        view: views.has(location.hash.slice(1)) ? location.hash.slice(1) : "overview",
+        view: views.has(location.hash.slice(1)) ? location.hash.slice(1) : "active",
         group: "all",
         query: "",
       };
@@ -674,10 +740,10 @@
         const high = archiveAxioms.filter((item) => item.fit >= 5).length;
         const medium = archiveAxioms.filter((item) => item.fit === 4).length;
         return [
-          ["43", "upstream axioms as reference archive"],
-          ["9", "active Zayn decision filters"],
-          [String(high), "high port candidates"],
-          [String(medium), "medium candidates"],
+          ["9", "active filters loaded into the Zayn context seed"],
+          ["43", "legacy axioms kept as reference, not default truth"],
+          [String(high), "strong port candidates worth first review"],
+          [String(medium), "medium candidates parked for later"],
         ];
       };
 
@@ -688,84 +754,84 @@
           .toLowerCase();
 
       const matches = (item) => visibleText(item).includes(state.query.toLowerCase());
+      const statusClass = (item) => item.alignment === "strong" || item.fit >= 5 ? "is-strong" : item.fit >= 4 ? "is-review" : "";
 
       function renderMetrics() {
-        const metrics = document.getElementById("metrics");
-        metrics.innerHTML = metricData()
-          .map(
-            ([value, label]) => `
-              <article class="metric">
-                <strong>${value}</strong>
-                <span>${label}</span>
-              </article>
-            `,
-          )
+        document.getElementById("metrics").innerHTML = metricData()
+          .map(([value, label]) => `<article class="lens"><strong>${value}</strong><span>${label}</span></article>`)
           .join("");
       }
 
-      function renderCategoryMap() {
-        const container = document.getElementById("categoryMap");
-        const counts = Object.keys(groups).map((key) => ({
-          key,
-          label: groups[key].name,
-          value: archiveAxioms.filter((item) => item.group === key).length,
-          colorClass: groups[key].colorClass,
-        }));
-        const max = Math.max(...counts.map((item) => item.value));
-        container.innerHTML = counts
-          .map(
-            (item) => `
-              <div class="bar-row">
-                <span>${item.label}</span>
-                <div class="bar-track">
-                  <div class="bar-fill ${item.colorClass}" style="width:${(item.value / max) * 100}%"></div>
-                </div>
-                <b>${item.value}</b>
-              </div>
-            `,
-          )
+      function renderDecisionFeed() {
+        const decisions = [
+          ["Z04", "Should temporal grounding become part of Evidence Ladder?"],
+          ["Z07", "Do we need an owner/accountability axiom from V01?"],
+          ["Z09", "Should dependency topology / bottleneck / actual use case split out?"],
+          ["Archive", "Are A03, T03, X02, X04, X06 worth porting first?"],
+        ];
+        document.getElementById("decisionFeed").innerHTML = decisions
+          .map(([label, text]) => `<div class="decision"><b>${label}</b><span>${text}</span></div>`)
           .join("");
       }
 
       function activeCard(item) {
-        const statusClass = item.alignment === "strong" ? "strong" : "review";
+        const chip = item.alignment === "strong" ? "strong" : "review";
         return `
-          <article class="card">
+          <article class="card ${statusClass(item)}">
             <div class="card-head">
               <div>
-                <span class="id active-id">${item.id}</span>
+                <span class="id">${item.id}</span>
                 <h3>${item.title}</h3>
               </div>
-              <span class="chip ${statusClass}">${item.alignment}</span>
+              <span class="chip ${chip}">${item.alignment}</span>
             </div>
             <p>${item.gist}</p>
-            <div class="detail">
-              <div class="detail-row"><b>为什么像 Zayn</b><span>${item.why}</span></div>
-              <div class="detail-row"><b>风险</b><span>${item.risk}</span></div>
-              <div class="detail-row"><b>需要对齐</b><span>${item.question}</span></div>
-              <div class="detail-row"><b>旧 axiom 映射</b><span>${item.maps}</span></div>
-            </div>
+            <details>
+              <summary>Why / risk / question</summary>
+              <div class="detail">
+                <div class="detail-row"><b>为什么像 Zayn</b><span>${item.why}</span></div>
+                <div class="detail-row"><b>风险</b><span>${item.risk}</span></div>
+                <div class="detail-row"><b>需要对齐</b><span>${item.question}</span></div>
+                <div class="detail-row"><b>旧 axiom 映射</b><span>${item.maps}</span></div>
+              </div>
+            </details>
           </article>
         `;
       }
 
-      function archiveCard(item, compact = false) {
+      function archiveCard(item) {
         const chip = item.fit >= 5 ? "strong" : item.fit >= 4 ? "review" : "";
-        const label = item.fit >= 5 ? "high port" : item.fit >= 4 ? "review" : "archive";
+        const label = item.fit >= 5 ? "strong" : item.fit >= 4 ? "review" : "archive";
         return `
-          <article class="card">
+          <article class="card ${statusClass(item)}">
             <div class="card-head">
               <div>
-                <span class="id ${compact ? "port-id" : "archive-id"}">${item.id}</span>
+                <span class="id">${item.id}</span>
                 <h3>${item.title}</h3>
               </div>
               <span class="chip ${chip}">${label}</span>
             </div>
             <p>${item.gist}</p>
-            <div class="detail">
-              <div class="detail-row"><b>优势</b><span>${item.strength}</span></div>
-              <div class="detail-row"><b>Port target</b><span>${item.target}</span></div>
+            <details>
+              <summary>Port detail</summary>
+              <div class="detail">
+                <div class="detail-row"><b>优势</b><span>${item.strength}</span></div>
+                <div class="detail-row"><b>Port target</b><span>${item.target}</span></div>
+              </div>
+            </details>
+          </article>
+        `;
+      }
+
+      function portRow(item) {
+        return `
+          <article class="port-row">
+            <span class="id">${item.id}</span>
+            <div>
+              <h3>${item.title}</h3>
+              <p>${item.strength}</p>
             </div>
+            <span class="chip ${item.fit >= 5 ? "strong" : "review"}">${item.target}</span>
           </article>
         `;
       }
@@ -779,15 +845,9 @@
 
       function renderFilters() {
         const filters = document.getElementById("groupFilters");
-        const buttons = [
-          ["all", "All"],
-          ...Object.entries(groups).map(([key, value]) => [key, value.name]),
-        ];
+        const buttons = [["all", "All groups"], ...Object.entries(groups).map(([key, value]) => [key, value.name])];
         filters.innerHTML = buttons
-          .map(
-            ([key, label]) =>
-              `<button class="filter-button ${state.group === key ? "active" : ""}" data-group="${key}">${label}</button>`,
-          )
+          .map(([key, label]) => `<button class="filter-button ${state.group === key ? "active" : ""}" data-group="${key}">${label}</button>`)
           .join("");
         filters.querySelectorAll("button").forEach((button) => {
           button.addEventListener("click", () => {
@@ -802,17 +862,18 @@
           .filter((item) => state.group === "all" || item.group === state.group)
           .filter(matches);
         document.getElementById("archiveGrid").innerHTML = items.length
-          ? items.map((item) => archiveCard(item)).join("")
+          ? items.map(archiveCard).join("")
           : `<div class="empty">No archive axioms match.</div>`;
       }
 
       function renderPort() {
         const items = archiveAxioms
           .filter((item) => item.fit >= 4)
+          .filter((item) => state.group === "all" || item.group === state.group)
           .filter(matches)
           .sort((a, b) => b.fit - a.fit || a.id.localeCompare(b.id));
         document.getElementById("portGrid").innerHTML = items.length
-          ? items.map((item) => archiveCard(item, true)).join("")
+          ? items.map(portRow).join("")
           : `<div class="empty">No port candidates match.</div>`;
       }
 
@@ -820,26 +881,31 @@
         document.querySelectorAll("[data-panel]").forEach((panel) => {
           panel.classList.toggle("hidden", panel.dataset.panel !== state.view);
         });
-        document.querySelectorAll(".tab").forEach((tab) => {
-          tab.classList.toggle("active", tab.dataset.view === state.view);
+        document.querySelectorAll(".nav-button").forEach((button) => {
+          button.classList.toggle("active", button.dataset.view === state.view);
         });
       }
 
       function render() {
         syncPanels();
         renderMetrics();
-        renderCategoryMap();
-        renderActive();
+        renderDecisionFeed();
         renderFilters();
+        renderActive();
         renderArchive();
         renderPort();
       }
 
-      document.querySelectorAll(".tab").forEach((tab) => {
-        tab.addEventListener("click", () => {
-          state.view = tab.dataset.view;
+      function scrollToCurrentPanel() {
+        document.querySelector(`[data-panel="${state.view}"]`)?.scrollIntoView({ block: "start" });
+      }
+
+      document.querySelectorAll(".nav-button").forEach((button) => {
+        button.addEventListener("click", () => {
+          state.view = button.dataset.view;
           history.replaceState(null, "", `#${state.view}`);
           render();
+          scrollToCurrentPanel();
         });
       });
 
@@ -853,10 +919,14 @@
         if (views.has(next)) {
           state.view = next;
           render();
+          scrollToCurrentPanel();
         }
       });
 
       render();
+      if (location.hash && state.view !== "active") {
+        scrollToCurrentPanel();
+      }
     </script>
   </body>
 </html>
