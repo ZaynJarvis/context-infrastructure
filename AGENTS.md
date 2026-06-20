@@ -1,8 +1,8 @@
-# AGENTS.md - Your Workspace
+# AGENTS.md - Zayn Context Infrastructure
 
-> **First time here?** Start with `setup_guide.md` — it'll walk you through setup in under an hour.
+> **First time here?** Start with `setup_guide.md`.
 
-This folder is home. Treat it that way.
+This repository is a reproducible seed of Zayn's context structure. It is not the full private memory layer.
 
 ## Every Session
 
@@ -20,7 +20,7 @@ This harness can delegate work to multiple sub-agents. You don't need to use the
 
 Before using sub-agents, read `rules/skills/workflow_parallel_subagents.md`. The current OpenCode pattern is `multi_tool_use.parallel` wrapping multiple `functions.task` calls in the same assistant message.
 
-Don't ask permission. Just do it.
+Autonomy rule: proceed inside the requested scope; ask only for irreversible/external actions, scope changes, secrets/private data, or product/taste/domain decisions that cannot be inferred.
 
 ## File Routing
 
@@ -46,9 +46,9 @@ Don't ask permission. Just do it.
 - 准备调用多个 `functions.task` 前，先把这个 skill 读一遍再执行  
 - 当前并行方式是 `multi_tool_use.parallel`；不要使用旧 `run_in_background` / `background_output` 写法
 
-## Axioms（公理）
+## Working Rules
 
-从个人经历提炼的决策原则，用于启发深度思考。分类索引、使用指南和触发词见 `rules/axioms/INDEX.md`。
+Zayn 的 active working rules。索引、使用指南和触发词见 `rules/axioms/INDEX.md`。上游样例 axioms 保留作参考，但默认不进入 active context。
 
 ## Sub-agent 模型路由
 

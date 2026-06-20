@@ -1,33 +1,49 @@
-# WORKSPACE.md - 目录路由速查
+# WORKSPACE.md - Context Routing
 
-目标：让 AI 每轮 session 都能快速知道"去哪里找/放什么"。**找任何文件前先查这里。**
+Goal: before searching broadly, identify the source of truth and the likely directory. This file is the routing table for Zayn's context structure.
 
-## 路由规则
+## This Repository
 
-### 项目与代码
-- 写代码 / 跑脚本 / 一次性项目：`adhoc_jobs/<project>/`
-- 工具脚本（邮件、语义搜索、分享报告等）：`tools/`
-- 定时任务：`periodic_jobs/`
+- Session bootstrap: `AGENTS.md`
+- Active agent contract: `rules/SOUL.md`
+- Active user model: `rules/USER.md`
+- Communication rules: `rules/COMMUNICATION.md`
+- Workspace routing: `rules/WORKSPACE.md`
+- Skills index: `rules/skills/INDEX.md`
+- Active working rules: `rules/axioms/INDEX.md`
+- Dynamic observations: `contexts/memory/OBSERVATIONS.md`
+- Observer/reflector jobs: `periodic_jobs/ai_heartbeat/`
+- Tooling scripts: `tools/`
 
-### 知识与记录
-- 通用调研报告：`contexts/survey_sessions/`
-- 思考 / 复盘 / 方法论：`contexts/thought_review/`
-- 每日日志：`contexts/daily_records/`
+## Zayn Project Routes
 
-### 系统与规则
-- 可复用技术方案 / Skill：`rules/skills/`
-- 核心公理（Axioms）：`rules/axioms/`
-- 记忆系统：`contexts/memory/` + `periodic_jobs/ai_heartbeat/`
+Public-safe project routes only. Local absolute paths belong in a private overlay.
 
-## 命名规则
-- 目录和文件名：小写 + 下划线 (snake_case)
-- 临时一次性项目：`tmp_<name>/`
+- `ZaynJarvis/context-infrastructure`: reproducible context structure and active bootstrap files.
+- `ZaynJarvis/notes`: public notes, reading artifacts, and long-form model updates.
+- `ZaynJarvis/zaynjarvis.com`: public homepage/project surface.
+- `ZaynJarvis/zouk`: Zouk application/runtime work.
+- OpenViking: memory/resource layer and semantic retrieval.
+- `t0saki/zouk-daemon`: current daemon repository; older daemon backup directories are reference-only.
 
-## Python 环境
-- 根目录 `.venv/` 为工作区级环境，用 `uv pip install` 管理依赖
-- 需要隔离时在 `adhoc_jobs/<project>/.venv/` 建独立环境
+## Routing Rules
 
-## 快速查询
+- Need behavior/persona/session guidance -> start with `AGENTS.md`, then `rules/SOUL.md`, `rules/USER.md`, `rules/COMMUNICATION.md`.
+- Need where a file or project belongs -> read this file before using broad search.
+- Need reusable execution workflow -> read `rules/skills/INDEX.md`.
+- Need Zayn working rules -> read `rules/axioms/INDEX.md`.
+- Need recent project state -> search `contexts/memory/OBSERVATIONS.md` by topic/date; do not load the whole file if it grows large.
+- Need machine-local/private context -> use local overlay or OpenViking; do not commit it to this repository.
 
-<!-- 随着你的项目增长，在这里添加活跃项目的快捷路由 -->
-<!-- 格式：- `project-name` → `adhoc_jobs/project_name/` (说明) -->
+## Source-Of-Truth Principle
+
+Every task should name the controlling source of truth:
+
+- code behavior -> repo file + test/build/log,
+- deployment state -> deployment system + runtime logs,
+- task state -> workspace task tracker,
+- long-term context -> OpenViking or committed context file,
+- public note state -> notes repo build/published route,
+- personal/private detail -> local overlay or non-committed memory.
+
+If a project is not listed here and becomes recurring, add a public-safe route.

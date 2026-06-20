@@ -1,0 +1,932 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Zayn Working Rules Review</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f7f5f0;
+        --panel: #fffdf8;
+        --panel-soft: #f1eee7;
+        --ink: #1f2328;
+        --muted: #68645d;
+        --line: #ddd6c9;
+        --line-strong: #cfc5b4;
+        --teal: #517c76;
+        --teal-soft: #dfece7;
+        --amber: #a9793d;
+        --amber-soft: #f1e3cf;
+        --blue: #486f9f;
+        --shadow: 0 16px 42px rgba(55, 47, 36, 0.09);
+        --radius: 8px;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        background:
+          radial-gradient(circle at top left, rgba(223, 236, 231, 0.75), transparent 30rem),
+          linear-gradient(180deg, #fbfaf6 0%, var(--bg) 46%, #f2efe8 100%);
+        color: var(--ink);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        letter-spacing: 0;
+      }
+
+      button,
+      input { font: inherit; }
+
+      button { -webkit-tap-highlight-color: transparent; }
+
+      .app { min-height: 100vh; }
+
+      .hero {
+        width: min(1160px, 100%);
+        margin: 0 auto;
+        padding: 18px 16px 8px;
+      }
+
+      .topline {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        margin-bottom: 28px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 760;
+        letter-spacing: 0;
+        text-transform: uppercase;
+      }
+
+      .brand-mark {
+        width: 22px;
+        height: 22px;
+        border: 1px solid var(--line-strong);
+        border-radius: 7px;
+        background: linear-gradient(135deg, var(--panel), var(--teal-soft));
+      }
+
+      .quiet-note {
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255, 253, 248, 0.78);
+        padding: 7px 10px;
+        color: var(--muted);
+        font-size: 12px;
+        white-space: nowrap;
+      }
+
+      .hero-grid {
+        display: grid;
+        gap: 24px;
+        align-items: center;
+      }
+
+      .kicker {
+        margin: 0 0 10px;
+        color: var(--teal);
+        font-size: 12px;
+        font-weight: 760;
+        letter-spacing: 0;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        max-width: 760px;
+        margin: 0;
+        font-size: 38px;
+        line-height: 0.98;
+        letter-spacing: 0;
+        font-weight: 780;
+      }
+
+      h1 span { display: block; }
+
+      .lead {
+        max-width: 650px;
+        margin: 18px 0 0;
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.65;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 22px;
+      }
+
+      .nav-button,
+      .filter-button {
+        min-height: 40px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255, 253, 248, 0.82);
+        color: var(--muted);
+        cursor: pointer;
+        padding: 8px 13px;
+      }
+
+      .nav-button.active,
+      .filter-button.active {
+        border-color: var(--ink);
+        background: var(--ink);
+        color: #fff;
+      }
+
+      .axiom-visual {
+        position: relative;
+        min-height: 320px;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background:
+          linear-gradient(135deg, rgba(255, 253, 248, 0.96), rgba(237, 232, 222, 0.82)),
+          radial-gradient(circle at 74% 42%, rgba(81, 124, 118, 0.2), transparent 18rem);
+        box-shadow: var(--shadow);
+      }
+
+      .archive-slips {
+        position: absolute;
+        left: 18px;
+        top: 36px;
+        width: 34%;
+        height: 72%;
+        opacity: 0.56;
+        filter: blur(0.2px);
+      }
+
+      .slip {
+        position: absolute;
+        width: 78px;
+        height: 18px;
+        border: 1px solid rgba(207, 197, 180, 0.8);
+        border-radius: 5px;
+        background: rgba(255, 253, 248, 0.8);
+        transform: rotate(var(--r));
+      }
+
+      .slip:nth-child(1) { left: 4px; top: 8px; --r: -8deg; }
+      .slip:nth-child(2) { left: 38px; top: 38px; --r: 5deg; }
+      .slip:nth-child(3) { left: 12px; top: 72px; --r: 2deg; }
+      .slip:nth-child(4) { left: 52px; top: 106px; --r: -5deg; }
+      .slip:nth-child(5) { left: 4px; top: 146px; --r: 7deg; }
+      .slip:nth-child(6) { left: 64px; top: 176px; --r: -3deg; }
+      .slip:nth-child(7) { left: 22px; top: 216px; --r: 4deg; }
+
+      .filter-stack {
+        position: absolute;
+        left: 30%;
+        right: 12%;
+        top: 34%;
+        display: grid;
+        grid-template-columns: repeat(9, minmax(0, 1fr));
+        gap: 6px;
+        transform: perspective(700px) rotateX(7deg);
+      }
+
+      .filter-card {
+        position: relative;
+        aspect-ratio: 0.58;
+        border: 1px solid rgba(81, 124, 118, 0.32);
+        border-radius: 7px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.66), rgba(223, 236, 231, 0.42));
+        box-shadow: 0 12px 28px rgba(50, 65, 61, 0.12);
+        backdrop-filter: blur(5px);
+      }
+
+      .filter-card::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 10px;
+        height: 10px;
+        border: 1px solid var(--teal);
+        border-radius: var(--shape, 50%);
+        transform: translate(-50%, -50%) rotate(var(--rot, 0deg));
+        opacity: 0.86;
+      }
+
+      .filter-card:nth-child(2)::after { --shape: 1px; width: 16px; height: 2px; background: var(--teal); }
+      .filter-card:nth-child(3)::after { --shape: 2px; }
+      .filter-card:nth-child(4)::after { width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 11px solid var(--amber); border-top: 0; }
+      .filter-card:nth-child(5)::after { width: 14px; height: 14px; border-radius: 50%; }
+      .filter-card:nth-child(6)::after { --rot: 45deg; --shape: 2px; }
+      .filter-card:nth-child(7)::after { width: 3px; height: 16px; background: var(--blue); border: 0; border-radius: 4px; }
+      .filter-card:nth-child(8)::after { width: 14px; height: 8px; border-radius: 50%; }
+      .filter-card:nth-child(9)::after { width: 16px; height: 16px; border-radius: 4px; border-color: var(--amber); }
+
+      .runtime-path {
+        position: absolute;
+        left: 66%;
+        right: 26px;
+        top: 70%;
+        height: 2px;
+        background: linear-gradient(90deg, var(--teal), var(--blue));
+      }
+
+      .runtime-path::before {
+        content: "";
+        position: absolute;
+        left: -46px;
+        top: -5px;
+        width: 48px;
+        height: 12px;
+        border-radius: 999px;
+        background: rgba(81, 124, 118, 0.18);
+      }
+
+      main {
+        display: grid;
+        gap: 18px;
+        width: min(1160px, 100%);
+        margin: 0 auto;
+        padding: 16px 16px 36px;
+      }
+
+      section { display: grid; gap: 14px; }
+
+      .panel {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: rgba(255, 253, 248, 0.72);
+        box-shadow: var(--shadow);
+      }
+
+      .panel-pad { padding: 16px; }
+
+      .section-head {
+        display: grid;
+        gap: 7px;
+        margin-bottom: 2px;
+      }
+
+      h2 {
+        margin: 0;
+        font-size: 20px;
+        line-height: 1.2;
+        letter-spacing: 0;
+      }
+
+      .section-note {
+        margin: 0;
+        max-width: 720px;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.55;
+      }
+
+      .lens-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .lens {
+        min-height: 104px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--panel);
+        padding: 13px;
+      }
+
+      .lens strong {
+        display: block;
+        font-size: 30px;
+        letter-spacing: 0;
+      }
+
+      .lens span {
+        display: block;
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.4;
+      }
+
+      .decision-list { display: grid; gap: 8px; }
+
+      .decision {
+        display: grid;
+        gap: 5px;
+        border-top: 1px solid var(--line);
+        padding: 12px 0 4px;
+      }
+
+      .decision:first-child { border-top: 0; padding-top: 0; }
+
+      .decision b { font-size: 13px; }
+
+      .decision span { color: var(--muted); font-size: 13px; line-height: 1.45; }
+
+      .toolbar {
+        display: grid;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .search {
+        width: 100%;
+        min-height: 42px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--panel);
+        color: var(--ink);
+        padding: 0 13px;
+        outline: none;
+      }
+
+      .search:focus {
+        border-color: var(--teal);
+        box-shadow: 0 0 0 3px rgba(81, 124, 118, 0.15);
+      }
+
+      .filters {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        padding-bottom: 2px;
+      }
+
+      .grid { display: grid; gap: 10px; }
+
+      .card {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--panel);
+        padding: 13px;
+      }
+
+      .card.is-strong { border-left: 4px solid var(--teal); }
+      .card.is-review { border-left: 4px solid var(--amber); }
+
+      .card-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .id {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 42px;
+        height: 26px;
+        border-radius: 999px;
+        padding: 0 9px;
+        background: var(--panel-soft);
+        color: var(--ink);
+        font-size: 12px;
+        font-weight: 760;
+      }
+
+      .card h3 {
+        margin: 8px 0 0;
+        font-size: 16px;
+        line-height: 1.32;
+      }
+
+      .card p {
+        margin: 9px 0 0;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.52;
+      }
+
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        min-height: 25px;
+        border-radius: 999px;
+        background: var(--panel-soft);
+        padding: 4px 9px;
+        color: var(--muted);
+        font-size: 12px;
+        white-space: nowrap;
+      }
+
+      .chip.strong { background: var(--teal-soft); color: #2d5e58; }
+      .chip.review { background: var(--amber-soft); color: #76501d; }
+
+      details {
+        margin-top: 12px;
+        border-top: 1px solid var(--line);
+        padding-top: 10px;
+      }
+
+      summary {
+        cursor: pointer;
+        color: var(--ink);
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .detail { display: grid; gap: 8px; margin-top: 10px; }
+
+      .detail-row { display: grid; gap: 3px; }
+      .detail-row b { font-size: 12px; }
+      .detail-row span { color: var(--muted); font-size: 13px; line-height: 1.45; }
+
+      .port-list { display: grid; gap: 8px; }
+
+      .port-row {
+        display: grid;
+        grid-template-columns: 52px 1fr auto;
+        gap: 10px;
+        align-items: center;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--panel);
+        padding: 11px;
+      }
+
+      .port-row h3 { margin: 0; font-size: 15px; }
+      .port-row p { margin: 4px 0 0; color: var(--muted); font-size: 13px; line-height: 1.4; }
+
+      .empty {
+        border: 1px dashed var(--line);
+        border-radius: var(--radius);
+        padding: 22px;
+        color: var(--muted);
+        text-align: center;
+      }
+
+      .hidden { display: none !important; }
+
+      [data-panel] { scroll-margin-top: 16px; }
+
+      @media (min-width: 760px) {
+        .hero { padding: 24px 24px 10px; }
+        .hero-grid { grid-template-columns: 0.95fr 1.05fr; gap: 30px; }
+        h1 { font-size: 68px; }
+        .axiom-visual { min-height: 360px; }
+        main { padding: 18px 24px 48px; }
+        .control-grid { grid-template-columns: 0.95fr 1.05fr; }
+        .toolbar { grid-template-columns: minmax(260px, 420px) 1fr; }
+        .grid.active-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .grid.archive-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <header class="hero">
+        <div class="topline">
+          <div class="brand"><span class="brand-mark"></span> Zayn Working Rules</div>
+          <span class="quiet-note">quiet rebuild</span>
+        </div>
+
+        <div class="hero-grid">
+          <div>
+            <p class="kicker">From archive to working rules</p>
+            <h1><span>43 old axioms stay archived.</span><span>9 working rules guide the active path.</span></h1>
+            <p class="lead">
+              这版不再把所有内容同时推到你眼前。先看当前 9 条是否真的控制判断；旧 43 条只作为候选输入，按需展开。
+            </p>
+            <div class="hero-actions" aria-label="Primary views">
+              <button class="nav-button active" data-view="active">Working 9</button>
+              <button class="nav-button" data-view="port">Port candidates</button>
+              <button class="nav-button" data-view="archive">Archive</button>
+            </div>
+          </div>
+
+          <figure class="axiom-visual" aria-label="43 archive inputs passing through 9 working rules into one runtime path">
+            <div class="archive-slips" aria-hidden="true">
+              <span class="slip"></span><span class="slip"></span><span class="slip"></span><span class="slip"></span>
+              <span class="slip"></span><span class="slip"></span><span class="slip"></span>
+            </div>
+            <div class="filter-stack" aria-hidden="true">
+              <span class="filter-card"></span><span class="filter-card"></span><span class="filter-card"></span>
+              <span class="filter-card"></span><span class="filter-card"></span><span class="filter-card"></span>
+              <span class="filter-card"></span><span class="filter-card"></span><span class="filter-card"></span>
+            </div>
+            <span class="runtime-path" aria-hidden="true"></span>
+          </figure>
+        </div>
+      </header>
+
+      <main>
+        <section class="panel panel-pad control-grid">
+          <div>
+            <div class="section-head">
+              <h2>Decision surface</h2>
+              <p class="section-note">这页只回答一个问题：哪些 working rule 应该进入 active context load path，哪些旧材料只适合留在 archive。</p>
+            </div>
+            <div class="lens-grid" id="metrics"></div>
+          </div>
+          <div>
+            <div class="section-head">
+              <h2>Open decisions</h2>
+              <p class="section-note">先审这些，不要从 43 条从头读。</p>
+            </div>
+            <div class="decision-list" id="decisionFeed"></div>
+          </div>
+        </section>
+
+        <section class="panel panel-pad">
+          <div class="toolbar">
+            <input id="search" class="search" type="search" placeholder="Search when you need the archive..." />
+            <div class="filters" id="groupFilters"></div>
+          </div>
+        </section>
+
+        <section class="panel panel-pad" data-panel="active">
+          <div class="section-head">
+            <h2>9 working rules</h2>
+            <p class="section-note">默认只露出规则和 open question。Why/risk/maps 收进 details，避免首屏变成报告。</p>
+          </div>
+          <div class="grid active-grid" id="activeGrid"></div>
+        </section>
+
+        <section class="panel panel-pad hidden" data-panel="port">
+          <div class="section-head">
+            <h2>Port candidates</h2>
+            <p class="section-note">候选不是 merge 指令。它们只是最值得拿来挑战 9 条 working rules 的旧模型。</p>
+          </div>
+          <div class="port-list" id="portGrid"></div>
+        </section>
+
+        <section class="panel panel-pad hidden" data-panel="archive">
+          <div class="section-head">
+            <h2>Archive</h2>
+            <p class="section-note">旧 43 条保留为 reference。只有当你要找反例、迁移候选、或旧模型优势时才展开。</p>
+          </div>
+          <div class="grid archive-grid" id="archiveGrid"></div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      const groups = {
+        A: { name: "AI / Agentic", colorClass: "bar-ai" },
+        T: { name: "Technical Decision", colorClass: "bar-tech" },
+        M: { name: "Management", colorClass: "bar-mgmt" },
+        V: { name: "Trust", colorClass: "bar-trust" },
+        X: { name: "Cross-domain", colorClass: "bar-cross" },
+      };
+
+      const archiveAxioms = [
+        ["A01", "从咨询到执行", "AI 的价值从回答转向端到端交付制品。", "把成功标准、工具访问和 observe-correct 闭环说清楚。", 5, "Z01/Z07"],
+        ["A02", "AI 是放大器", "AI 放大人的意图、判断和验证能力。", "保留了人类品味和验证作为稀缺资源的判断。", 3, "Z04/Z07"],
+        ["A03", "IC 到管理者", "AI 协作要求从亲自执行转为设定上下文、方法和验收。", "能补足当前 9 条里对 delegation/manager stance 的缺口。", 5, "new or Z07"],
+        ["A04", "可靠性是管理问题", "可靠性来自预期、验证、反馈和异常处理，而不是模型本身。", "直接支撑 agent runtime 的 trust model。", 5, "Z04/Z07"],
+        ["A05", "文档即长期记忆", "文档是 agent 的显式长期记忆和共享上下文。", "需要被改写成 context lifecycle，而不是静态文档崇拜。", 4, "Z08"],
+        ["A06", "框架选择即世界观", "框架会锁定未来系统能看到和能表达的问题。", "适合保留为技术选择的 warning，不一定进入核心 9 条。", 3, "Z09"],
+        ["A07", "设计哲学决定上限", "规划驱动、任务驱动等设计哲学会限制能力天花板。", "对 agent orchestration 有用，但需要压缩成 control-axis 语言。", 3, "Z09"],
+        ["A08", "提示质量是主要杠杆", "AI 输出质量高度依赖需求、上下文和验收写法。", "部分已被 Z01/Z04 覆盖；注意不要回到 prompt-centric。", 2, "covered"],
+        ["A09", "构建者思维是护城河", "主动构建系统比被动使用工具更有长期优势。", "身份判断强，但不够可操作；适合 profile，不适合 core rule。", 2, "profile"],
+        ["A10", "熟悉度胜过原始智能", "长期上下文和协作默契可能比单次模型能力更重要。", "对 memory/context infra 很关键，但需要证据化表达。", 4, "Z08"],
+        ["A11", "工具组合即能力扩展", "工具被组合后会产生非线性能力。", "可迁移到 MCP/tool surface，但当前 9 条没有显式覆盖。", 3, "maybe new"],
+        ["A12", "AI 原生开发范式", "软件应提供 AI 可消费的接口和状态。", "和 default path/source-of-truth 强相关，值得 port 成产品原则。", 4, "Z06/Z03"],
+        ["A13", "技术采用三阶段", "工具采用从 driver 到 co-pilot 再到 architect。", "更像观察模型，不是稳定决策 filter。", 1, "archive"],
+
+        ["T01", "基础设施优于组件", "系统瓶颈通常在基础设施和连接层，而非单点组件。", "和 context infra 主题高度相关，但会和 X03 重叠。", 4, "Z09"],
+        ["T02", "结果确定性优于过程确定性", "关注可验证结果，不死守固定步骤。", "已经被 autonomy gates 和 Z07 部分覆盖。", 3, "covered"],
+        ["T03", "上下文隔离是多 Agent 价值", "多 agent 的价值来自隔离信息域和任务状态。", "应强烈 port，直接对应 agent identity/coordination 问题。", 5, "Z08/Z09"],
+        ["T04", "数据优于观点", "有可用数据时，用数据校正观点和优先级。", "可并入 evidence ladder，但需要避免数据崇拜。", 3, "Z04"],
+        ["T05", "认知是资产，代码是消耗品", "代码生成变便宜后，理解、判断和品味升值。", "很像 Zayn profile 的核心，但不是 infra contract 本身。", 3, "profile"],
+        ["T06", "依赖拓扑优于任务数量", "耦合和依赖形状比 task count 更能决定复杂度。", "应 port；能增强 Z02 的 state transition 分析。", 5, "Z02/Z09"],
+        ["T07", "隔离-处理-验证闭环", "先隔离问题，再处理，再验证结果。", "应 port；比 Z07 更有 debug workflow 形状。", 5, "Z07/Z04"],
+        ["T08", "第一性原理方法论设计", "先问框架是否解决真实问题，而不是继承框架答案。", "有价值，但可被 Z09 控制轴原则吸收。", 3, "Z09"],
+        ["T09", "数据策略与 MDP", "数据捕获本身是第一阶段产品。", "对 OpenViking 很重要，但需要单独讨论 privacy/data loop。", 3, "review"],
+
+        ["M01", "闭环校准", "精通来自持续反馈，而非一次性完美计划。", "和 Z07 强相关，可 port 成 verification cadence。", 4, "Z07"],
+        ["M02", "逆向调试心智", "从症状倒推假设，用排除法缩小原因空间。", "应和 X02/T07 合并，而不是单独三条都进入。", 4, "Z04/Z07"],
+        ["M03", "量化优先级", "用可比较指标聚焦最大收益点。", "适合 workflow，不一定是 context core。", 2, "workflow"],
+        ["M04", "主动管理优于工具心智", "复杂系统需要管理接口、反馈和约束。", "和 A03/A04 重合，值得合并成 delegation rule。", 4, "new"],
+        ["M05", "简单即认知效率", "简单不是少功能，而是低认知摩擦。", "值得 port 到 default path/product contract。", 4, "Z06"],
+        ["M06", "连接创造优于孤立知识", "跨域连接比单点知识更容易产生新判断。", "适合 reader/research，不一定是 repo bootstrap core。", 2, "reader"],
+        ["M07", "多线程即可持续能量", "多条兴趣线程能保持长期能量和韧性。", "偏个人能量模型，不适合 public context seed。", 1, "archive"],
+        ["M08", "自我系统化", "人、工具、日志、AI 构成混合系统。", "和 context infra 精神接近，但需要隐私边界后再 port。", 3, "review"],
+        ["M09", "AI 时代管理范式", "过程确定性转向结果确定性与科学脑评估。", "和 T02/A03 重复，适合合并。", 2, "covered"],
+        ["M10", "教育流失阶梯", "学习/传播会在多道摩擦关卡中流失。", "对课程/内容有用，不是当前 infra core。", 1, "archive"],
+
+        ["V01", "责任无法被委派", "执行可委派，问责不可委派。", "强烈建议 port；当前 9 条缺少 owner/accountability。", 5, "new"],
+        ["V02", "可验证性是信任地基", "只有可检测错误的系统才能建立信任。", "已经被 Z07 覆盖，但可以让 Z07 更锋利。", 5, "Z07"],
+        ["V03", "归因塑造感知", "可见归因会影响用户对系统的信任。", "适合 product surface，不一定是 core rule。", 3, "Z06"],
+        ["V04", "时间锚定防止幻觉", "结论需要带时间边界和重新验证触发条件。", "建议 port 到 evidence ladder，尤其是现代事实/价格/规则。", 5, "Z04"],
+        ["V05", "信任归因双维度", "区分信任主体和信任域，避免把黑箱信任错归给系统。", "对 public demo/产品化重要；先放 review。", 3, "review"],
+
+        ["X01", "约束悖论", "能力升级会暴露新的微观约束和操作成本。", "有用但偏隐喻；可作为 X04 的支撑，不必进 core。", 2, "archive"],
+        ["X02", "系统化调试", "高价值实验应最大化信息增益，而非行动量。", "强烈建议 port；这是 Zayn debugging style 的核心。", 5, "Z04/Z07"],
+        ["X03", "效率由瓶颈决定", "系统吞吐由最紧约束决定，瓶颈会迁移。", "值得 port；能防止优化错层。", 4, "Z09"],
+        ["X04", "为真实用例设计", "最优工具取决于真实工作流和摩擦预算。", "强烈建议 port；能补足 product/design judgment。", 5, "Z06/Z09"],
+        ["X05", "精度在系统中级联", "高耦合系统中小误差会跨接口放大。", "对 data/runtime infra 有用，但可能是专题 rule。", 3, "review"],
+        ["X06", "抓大放小系统分析", "先找最大决策点；相悖信号最有价值。", "强烈建议 port；非常适合 reader/scout 和陌生系统分析。", 5, "new"],
+      ].map(([id, title, gist, strength, fit, target]) => ({
+        id,
+        group: id[0],
+        title,
+        gist,
+        strength,
+        fit,
+        target,
+      }));
+
+      const activeRules = [
+        {
+          id: "Z01",
+          title: "Fix what the agent actually loads",
+          gist: "文档能解释意图，但行为来自 agent 实际加载的文件、规则、技能、memory、工具和 gate。",
+          alignment: "strong",
+          why: "完全贴合这次纠正：目标是 reproduce context structure，而不是改 public framing。",
+          risk: "如果过度压低 README，会忽略 public repo 仍需要最小解释入口。",
+          question: "README 是否只保留安装/结构说明，还是也要承载轻量 public narrative？",
+          maps: "A01, A05, T08",
+        },
+        {
+          id: "Z02",
+          title: "Debug the handoff",
+          gist: "stale resume、restart、owner 丢失、memory 没加载，通常都是状态交接问题。",
+          alignment: "strong",
+          why: "与你的 context/session/task/lifecycle 问题最直接对齐。",
+          risk: "目前还偏抽象；需要配一个 session/task lifecycle checklist。",
+          question: "你的 context infra 是否要显式建 session/task/lifecycle schema？",
+          maps: "T03, T06, X05",
+        },
+        {
+          id: "Z03",
+          title: "Find the source of truth first",
+          gist: "动手前先说清事实归谁管：repo、test、log、deploy、task tracker、committed context 还是 OpenViking。",
+          alignment: "strong",
+          why: "直接对应你对 evidence、file:line、runtime state 的偏好。",
+          risk: "source-of-truth 需要可维护 route table，否则会变成口号。",
+          question: "WORKSPACE 是否应该拆 public routes 和 private local overlay？",
+          maps: "T04, V04, X02",
+        },
+        {
+          id: "Z04",
+          title: "Mark fact, guess, and plan",
+          gist: "日志、代码、截图是事实；根因解释是猜测；下一步是计划。不要混成一句话。",
+          alignment: "strong",
+          why: "这是 reader 和工程 agent 都反复校准出的硬约束。",
+          risk: "缺少 temporal grounding；现代事实需要时间边界。",
+          question: "是否把 V04 时间锚定并入 Z04？",
+          maps: "T04, V02, V04",
+        },
+        {
+          id: "Z05",
+          title: "Do not mix fix with cleanup",
+          gist: "先修用户看到的行为路径；cleanup 只有在修复必须依赖它时才一起做。",
+          alignment: "medium",
+          why: "符合你的 PR/patch 期望，能防止 scope 膨胀。",
+          risk: "可能过窄，更像 coding workflow，不一定是顶层 context rule。",
+          question: "它应保留为 core rule，还是下沉到工程 skill？",
+          maps: "T07, M02",
+        },
+        {
+          id: "Z06",
+          title: "The normal path is the product",
+          gist: "默认路径走到错 repo、旧 memory、错 workspace、不可见产物，就是系统坏了。",
+          alignment: "strong",
+          why: "贴合你对 workspace、sidebar、daemon、memory 可见性的反复关注。",
+          risk: "需要绑定具体 UI/runtime examples，避免泛化成 UX slogan。",
+          question: "是否加入 M05/X04，强化摩擦预算和真实用例？",
+          maps: "M05, X04, V03",
+        },
+        {
+          id: "Z07",
+          title: "Small patch, real verification",
+          gist: "diff 可以小，但必须证明目标状态真的变了，并说清剩余风险。",
+          alignment: "strong",
+          why: "高度符合你的工程协作模式。",
+          risk: "如果没有 V01 accountability，验证责任容易散。",
+          question: "是否增加 'owner cannot be delegated' 作为新 rule？",
+          maps: "A04, T07, V01, V02",
+        },
+        {
+          id: "Z08",
+          title: "Memory must be in the decision path",
+          gist: "memory 存在但没有在正确身份、scope、时间点被读到，就只是 archive。",
+          alignment: "strong",
+          why: "这是这批 9 条里最像你的 context infra 核心的压缩。",
+          risk: "需要说明 OpenViking/notes/docs 分别在哪个 runtime point 生效。",
+          question: "是否要把 memory/session/task 的边界写成一张决策表？",
+          maps: "A05, A10, T03",
+        },
+        {
+          id: "Z09",
+          title: "Axes before labels",
+          gist: "分类只有改变行动才有用；优先看 identity、scope、session、owner、lifecycle、evidence、verification。",
+          alignment: "strong",
+          why: "正中你对漂亮 taxonomy 但无控制面的反感。",
+          risk: "现在覆盖太大，可能吞掉 dependency topology、bottleneck、real use case 等更尖锐模型。",
+          question: "Z09 是否应拆出 dependency topology / bottleneck / actual use case？",
+          maps: "T06, X03, X04, X06",
+        },
+      ];
+
+      const views = new Set(["active", "port", "archive"]);
+
+      const state = {
+        view: views.has(location.hash.slice(1)) ? location.hash.slice(1) : "active",
+        group: "all",
+        query: "",
+      };
+
+      const metricData = () => {
+        const high = archiveAxioms.filter((item) => item.fit >= 5).length;
+        const medium = archiveAxioms.filter((item) => item.fit === 4).length;
+        return [
+          ["9", "working rules loaded into the Zayn context seed"],
+          ["43", "legacy axioms kept as reference, not default truth"],
+          [String(high), "strong port candidates worth first review"],
+          [String(medium), "medium candidates parked for later"],
+        ];
+      };
+
+      const visibleText = (item) =>
+        [item.id, item.title, item.gist, item.strength, item.target, item.why, item.risk, item.question, item.maps]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
+
+      const matches = (item) => visibleText(item).includes(state.query.toLowerCase());
+      const statusClass = (item) => item.alignment === "strong" || item.fit >= 5 ? "is-strong" : item.fit >= 4 ? "is-review" : "";
+
+      function renderMetrics() {
+        document.getElementById("metrics").innerHTML = metricData()
+          .map(([value, label]) => `<article class="lens"><strong>${value}</strong><span>${label}</span></article>`)
+          .join("");
+      }
+
+      function renderDecisionFeed() {
+        const decisions = [
+          ["Z04", "Should temporal grounding become part of fact/guess/plan?"],
+          ["Z07", "Do we need an owner/accountability rule from V01?"],
+          ["Z09", "Should dependency topology / bottleneck / actual use case split out?"],
+          ["Archive", "Are A03, T03, X02, X04, X06 worth porting first?"],
+        ];
+        document.getElementById("decisionFeed").innerHTML = decisions
+          .map(([label, text]) => `<div class="decision"><b>${label}</b><span>${text}</span></div>`)
+          .join("");
+      }
+
+      function activeCard(item) {
+        const chip = item.alignment === "strong" ? "strong" : "review";
+        return `
+          <article class="card ${statusClass(item)}">
+            <div class="card-head">
+              <div>
+                <span class="id">${item.id}</span>
+                <h3>${item.title}</h3>
+              </div>
+              <span class="chip ${chip}">${item.alignment}</span>
+            </div>
+            <p>${item.gist}</p>
+            <details>
+              <summary>Why / risk / question</summary>
+              <div class="detail">
+                <div class="detail-row"><b>为什么像 Zayn</b><span>${item.why}</span></div>
+                <div class="detail-row"><b>风险</b><span>${item.risk}</span></div>
+                <div class="detail-row"><b>需要对齐</b><span>${item.question}</span></div>
+                <div class="detail-row"><b>旧 archive 映射</b><span>${item.maps}</span></div>
+              </div>
+            </details>
+          </article>
+        `;
+      }
+
+      function archiveCard(item) {
+        const chip = item.fit >= 5 ? "strong" : item.fit >= 4 ? "review" : "";
+        const label = item.fit >= 5 ? "strong" : item.fit >= 4 ? "review" : "archive";
+        return `
+          <article class="card ${statusClass(item)}">
+            <div class="card-head">
+              <div>
+                <span class="id">${item.id}</span>
+                <h3>${item.title}</h3>
+              </div>
+              <span class="chip ${chip}">${label}</span>
+            </div>
+            <p>${item.gist}</p>
+            <details>
+              <summary>Port detail</summary>
+              <div class="detail">
+                <div class="detail-row"><b>优势</b><span>${item.strength}</span></div>
+                <div class="detail-row"><b>Port target</b><span>${item.target}</span></div>
+              </div>
+            </details>
+          </article>
+        `;
+      }
+
+      function portRow(item) {
+        return `
+          <article class="port-row">
+            <span class="id">${item.id}</span>
+            <div>
+              <h3>${item.title}</h3>
+              <p>${item.strength}</p>
+            </div>
+            <span class="chip ${item.fit >= 5 ? "strong" : "review"}">${item.target}</span>
+          </article>
+        `;
+      }
+
+      function renderActive() {
+        const items = activeRules.filter(matches);
+        document.getElementById("activeGrid").innerHTML = items.length
+          ? items.map(activeCard).join("")
+          : `<div class="empty">No working rules match.</div>`;
+      }
+
+      function renderFilters() {
+        const filters = document.getElementById("groupFilters");
+        const buttons = [["all", "All groups"], ...Object.entries(groups).map(([key, value]) => [key, value.name])];
+        filters.innerHTML = buttons
+          .map(([key, label]) => `<button class="filter-button ${state.group === key ? "active" : ""}" data-group="${key}">${label}</button>`)
+          .join("");
+        filters.querySelectorAll("button").forEach((button) => {
+          button.addEventListener("click", () => {
+            state.group = button.dataset.group;
+            render();
+          });
+        });
+      }
+
+      function renderArchive() {
+        const items = archiveAxioms
+          .filter((item) => state.group === "all" || item.group === state.group)
+          .filter(matches);
+        document.getElementById("archiveGrid").innerHTML = items.length
+          ? items.map(archiveCard).join("")
+          : `<div class="empty">No archive axioms match.</div>`;
+      }
+
+      function renderPort() {
+        const items = archiveAxioms
+          .filter((item) => item.fit >= 4)
+          .filter((item) => state.group === "all" || item.group === state.group)
+          .filter(matches)
+          .sort((a, b) => b.fit - a.fit || a.id.localeCompare(b.id));
+        document.getElementById("portGrid").innerHTML = items.length
+          ? items.map(portRow).join("")
+          : `<div class="empty">No port candidates match.</div>`;
+      }
+
+      function syncPanels() {
+        document.querySelectorAll("[data-panel]").forEach((panel) => {
+          panel.classList.toggle("hidden", panel.dataset.panel !== state.view);
+        });
+        document.querySelectorAll(".nav-button").forEach((button) => {
+          button.classList.toggle("active", button.dataset.view === state.view);
+        });
+      }
+
+      function render() {
+        syncPanels();
+        renderMetrics();
+        renderDecisionFeed();
+        renderFilters();
+        renderActive();
+        renderArchive();
+        renderPort();
+      }
+
+      function scrollToCurrentPanel() {
+        document.querySelector(`[data-panel="${state.view}"]`)?.scrollIntoView({ block: "start" });
+      }
+
+      document.querySelectorAll(".nav-button").forEach((button) => {
+        button.addEventListener("click", () => {
+          state.view = button.dataset.view;
+          history.replaceState(null, "", `#${state.view}`);
+          render();
+          scrollToCurrentPanel();
+        });
+      });
+
+      document.getElementById("search").addEventListener("input", (event) => {
+        state.query = event.target.value.trim();
+        render();
+      });
+
+      window.addEventListener("hashchange", () => {
+        const next = location.hash.slice(1);
+        if (views.has(next)) {
+          state.view = next;
+          render();
+          scrollToCurrentPanel();
+        }
+      });
+
+      render();
+      if (location.hash && state.view !== "active") {
+        scrollToCurrentPanel();
+      }
+    </script>
+  </body>
+</html>
