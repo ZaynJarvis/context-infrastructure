@@ -10,7 +10,7 @@ Goal: before searching broadly, identify the source of truth and the likely dire
 - Communication rules: `rules/COMMUNICATION.md`
 - Workspace routing: `rules/WORKSPACE.md`
 - Skills index: `rules/skills/INDEX.md`
-- Active axioms: `rules/axioms/INDEX.md`
+- Active working rules: `rules/axioms/INDEX.md`
 - Dynamic observations: `contexts/memory/OBSERVATIONS.md`
 - Observer/reflector jobs: `periodic_jobs/ai_heartbeat/`
 - Tooling scripts: `tools/`
@@ -31,7 +31,7 @@ Public-safe project routes only. Local absolute paths belong in a private overla
 - Need behavior/persona/session guidance -> start with `AGENTS.md`, then `rules/SOUL.md`, `rules/USER.md`, `rules/COMMUNICATION.md`.
 - Need where a file or project belongs -> read this file before using broad search.
 - Need reusable execution workflow -> read `rules/skills/INDEX.md`.
-- Need Zayn decision filters -> read `rules/axioms/INDEX.md`.
+- Need Zayn working rules -> read `rules/axioms/INDEX.md`.
 - Need recent project state -> search `contexts/memory/OBSERVATIONS.md` by topic/date; do not load the whole file if it grows large.
 - Need machine-local/private context -> use local overlay or OpenViking; do not commit it to this repository.
 

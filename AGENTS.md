@@ -46,9 +46,9 @@ Autonomy rule: proceed inside the requested scope; ask only for irreversible/ext
 - 准备调用多个 `functions.task` 前，先把这个 skill 读一遍再执行  
 - 当前并行方式是 `multi_tool_use.parallel`；不要使用旧 `run_in_background` / `background_output` 写法
 
-## Axioms（公理）
+## Working Rules
 
-Zayn 的 active decision filters。索引、使用指南和触发词见 `rules/axioms/INDEX.md`。上游样例 axioms 保留作参考，但默认不进入 active context。
+Zayn 的 active working rules。索引、使用指南和触发词见 `rules/axioms/INDEX.md`。上游样例 axioms 保留作参考，但默认不进入 active context。
 
 ## Sub-agent 模型路由
 

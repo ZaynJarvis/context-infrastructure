@@ -1,28 +1,28 @@
-# Active Axioms Index
+# Working Rules Index
 
-This file defines the active decision filters for Zayn's context infrastructure.
+This file defines the active working rules for Zayn's context infrastructure.
 
-The upstream axiom files in this directory are preserved as reference/sample material, but they are not active unless this index links them. Do not load the old 43-file set as Zayn's current cognitive model by default.
+The upstream axiom files in this directory are preserved as reference/sample material, but they are not active unless this index links them. Do not load the old 43-file set as Zayn's current model by default.
 
 ## How To Use
 
-Use these axioms when a task involves architecture, agent behavior, context design, debugging, reading/research, or durable workflow decisions. They are not motivational statements; each should change a concrete choice.
+Use these rules when a task involves architecture, agent behavior, context design, debugging, reading/research, or durable workflow decisions. They are not motivational statements; each should change a concrete choice.
 
 ## Active Set
 
 Detailed notes live in `zayn_active.md`.
 
-| ID | Axiom | Control Meaning |
+| ID | Working Rule | What It Changes |
 |----|-------|-----------------|
-| Z01 | Runtime contract > code narrative | Behavior is controlled by loaded contract, state, tools, and verification, not by an explanatory README. |
-| Z02 | State transition > static state | The important question is how state changes, survives, resumes, and becomes visible. |
-| Z03 | Source-of-truth routing | Before fixing or reading, identify which system owns the truth. |
-| Z04 | Evidence ladder | Separate fact, inference, and proposal. |
-| Z05 | Behavior fix != cleanup | Fix the behavior first; cleanup is a separate scoped decision. |
-| Z06 | Default path as product contract | The path users/agents naturally take is part of the product, not just UX polish. |
-| Z07 | Small patch, full verification | Scope the diff tightly and verify the actual target state. |
-| Z08 | Context is runtime state, not memory text | Memory only matters when it affects the active decision path. |
-| Z09 | Control axes before taxonomy | A taxonomy is useful only if it maps to identity, scope, lifecycle, ownership, evidence, or verification. |
+| Z01 | Fix what the agent actually loads | Inspect the loaded files, rules, skills, memory, tools, and gates before trusting explanatory docs. |
+| Z02 | Debug the handoff | Treat stale resume, restart, lost ownership, and missing memory as transition bugs. |
+| Z03 | Find the source of truth first | Name the authority before changing anything. |
+| Z04 | Mark fact, guess, and plan | Separate observed evidence, explanation, and next move. |
+| Z05 | Do not mix fix with cleanup | Fix the behavior path first; cleanup is separate unless required. |
+| Z06 | The normal path is the product | If the default path reaches wrong or stale state, the system is broken. |
+| Z07 | Small patch, real verification | Keep the diff narrow and verify the target state actually changed. |
+| Z08 | Memory must be in the decision path | Stored memory is archive unless it is loaded and used at the right moment. |
+| Z09 | Axes before labels | Classify only when the label changes a decision. |
 
 ## Trigger Map
 
@@ -34,4 +34,4 @@ Detailed notes live in `zayn_active.md`.
 
 ## Inactive Reference Material
 
-The original upstream A/T/M/V/X axiom files remain in this directory for comparison. Treat them as sample content from the source repository, not as Zayn's active model.
+The original upstream A/T/M/V/X axiom files remain in this directory for comparison. Treat them as sample content from the source repository, not as Zayn's active working model.

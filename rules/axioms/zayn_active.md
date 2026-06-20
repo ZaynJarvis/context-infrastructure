@@ -1,45 +1,47 @@
-# Zayn Active Axioms
+# Zayn Working Rules
 
-These are compact working filters for agents operating in Zayn's workspace.
+These are working rules for agents operating in Zayn's workspace.
 
-## Z01 Runtime Contract > Code Narrative
+They are not slogans. Each rule should change what an agent checks, fixes, or verifies in a real task.
 
-README and docs can explain intent, but the active contract is what the agent actually loads: `AGENTS.md`, `rules/`, skills, memory, tools, and validation gates. If behavior is wrong, fix the loaded contract or runtime path first.
+## Z01 Fix What The Agent Actually Loads
 
-## Z02 State Transition > Static State
+README and docs can explain intent, but behavior comes from the files, rules, skills, memory, tools, and gates the agent actually loads. If behavior is wrong, inspect that loaded path first.
 
-Most important failures are transition failures: a task resumes with stale context, a daemon restarts without visible state, an agent loses ownership, or a memory exists but is not loaded at the decision point. Ask how state enters, changes, persists, and becomes inspectable.
+## Z02 Debug The Handoff
 
-## Z03 Source-Of-Truth Routing
+Stale resume, daemon restart, ownership loss, and missing memory are usually handoff bugs. Check how state moves, who owns it after the transition, and how the new state becomes visible.
 
-Before searching or changing broadly, identify the source of truth. Code behavior belongs to files/tests/logs; deployment state belongs to runtime logs and deploy system; task state belongs to the task tracker; long-term context belongs to committed context or OpenViking.
+## Z03 Find The Source Of Truth First
 
-## Z04 Evidence Ladder
+Before changing anything, name the authority: repo, tests, logs, deploy system, task tracker, committed context, or OpenViking. Do not debug from a stale copy of the truth.
 
-Use three levels explicitly:
+## Z04 Mark Fact, Guess, And Plan
 
-- confirmed fact: directly inspected source, command, log, diff, PR, or runtime state,
-- inference: best explanation from facts,
-- proposal: recommended next move.
+Keep three things separate:
 
-Do not present inference as fact.
+- fact: directly inspected source, command, log, diff, PR, screenshot, or runtime state,
+- guess: best explanation from those facts,
+- plan: recommended next move.
 
-## Z05 Behavior Fix != Cleanup
+Do not present a guess as if it were observed.
 
-A behavior fix changes the failing control path. Cleanup reduces confusion or debt. Do not mix them unless the cleanup is necessary for the fix; otherwise report it as a separate follow-up.
+## Z05 Do Not Mix Fix With Cleanup
 
-## Z06 Default Path As Product Contract
+Fix the failing behavior path first. Cleanup only belongs in the same change when it is needed for the fix to hold.
 
-The path a user or agent naturally takes is part of the product contract. If the default path leads to the wrong workspace, stale memory, wrong repo, or invisible artifact, the system is broken even if an expert can work around it.
+## Z06 The Normal Path Is The Product
 
-## Z07 Small Patch, Full Verification
+If the default user or agent path hits the wrong repo, stale memory, wrong workspace, or invisible artifact, the system is broken. A workaround does not make the default path correct.
 
-Prefer a narrow diff with exact validation over broad conceptual correctness. A patch is not done until the target state is verified and the residual risk is named.
+## Z07 Small Patch, Real Verification
 
-## Z08 Context Is Runtime State, Not Memory Text
+Make the narrowest useful diff, then verify that the target state actually changed. Name remaining risk instead of implying the change is complete by intent.
 
-A memory that is not loaded, routed, or used at the decision point is archive, not context. Context infrastructure should optimize for the active decision path: what gets read, when, by whom, under which scope, and with what authority.
+## Z08 Memory Must Be In The Decision Path
 
-## Z09 Control Axes Before Taxonomy
+Memory that is stored but not loaded, routed, or used at the decision point is archive, not context. A context system should optimize what gets read, when, by whom, under which scope, and with what authority.
 
-A taxonomy is useful only if it changes a control decision. For Zayn's systems, useful axes are usually identity, scope, session, task, lifecycle, ownership, resource binding, provenance, evidence, and verification.
+## Z09 Axes Before Labels
+
+Classify only when the label changes a decision. Useful axes are usually identity, scope, session, task, lifecycle, owner, resource binding, provenance, evidence, and verification.
